@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="agi.erecreditsmanager.MainActivity">
+
+    <TextView
+        android:text="전체 학점 : 0/130"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/totalCreditsTextView" />
+
+    <Button
+        android:text="반영"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/totalCreditsTextView"
+        android:layout_toEndOf="@+id/totalCreditsTextView"
+        android:id="@+id/applyButton"
+        android:onClick="applyClicked"
+        android:padding="0dp" />
+
+    <Button
+        android:text="저장"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/applyButton"
+        android:layout_toRightOf="@+id/applyButton"
+        android:layout_toEndOf="@+id/applyButton"
+        android:id="@+id/saveButton"
+        android:onClick="saveClicked"
+        android:padding="0dp"/>
+
+    <Button
+        android:text="닫기"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:id="@+id/closeButton"
+        android:onClick="closeClicked"
+        android:padding="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/saveButton"
+        android:layout_toEndOf="@+id/saveButton"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/applyButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/listView" />
+</RelativeLayout>

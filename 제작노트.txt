@@ -1,0 +1,142 @@
+EREGraduation의 개선작.
+-----------------------
+
+기본 체계
+
+total : 교양 + 전공 / 130학점
+ culture : 교양 / 40학점
+  culture_basic : 학문의 기초 / 34학점
+   thiExp : 사고와 표현 / 3학점
+    sciEngWri : 과학과 기술 글쓰기(3학점)
+
+   foreign : 외국어 2개 교과목(TEPS 900점 이하 영어 1과목 필수) / 4학점
+    (사용자 지정 추가)
+
+   numAnaInf : 수량적 분석과 추론 / 12학점
+    math1 : (고급)수학 및 연습1(3학점)
+    math2 : (고급)수학 및 연습2(3학점)
+    engMat1 : 공학수학1(3학점)
+    engMat2 : 공학수학2(3학점)
+
+   sciThiExp : 과학적 사고와 실험 / 12학점
+    physics1 : (고급)물리학1(물리의 기본1)(3학점)
+    phyExp1 : 물리학실험1(1학점)
+    physics2 : (고급)물리학2(물리의 기본2)(3학점)
+    phyExp2 : 물리학실험2(1학점)
+    physics : 물리학(3학점)
+    phyExp : 물리학실험(1학점)
+    chemistry1 : 화학1(3학점)
+    cheExp1 : 화학실험1(1학점)
+    chemistry2 : 화학2(3학점)
+    cheExp2 : 화학실험2(1학점)
+    chemistry : 화학(3학점)
+    cheExp : 화학실험(1학점)
+    earSysSci : 지구시스템과학(3학점)
+    earSysSciExp : 지구시스템과학실험(1학점)
+
+   comInfApp : 컴퓨터와 정보 활용 / 3학점
+    computer : 컴퓨터의 개념 및 실습(3학점)
+
+  culture_world : 학문의 세계(2개 영역 이상) / 6학점
+   lenLit : 언어와 문학
+    (사용자 지정 추가)
+
+   culArt : 문화와 예술
+    (사용자 지정 추가)
+
+   hisPhi : 역사와 철학
+    (사용자 지정 추가)
+
+   polEco : 정치와 경제
+    (사용자 지정 추가)
+
+   humSoc : 인간과 사회
+    (사용자 지정 추가)
+
+  culture_engineering : 공대 사회/창의성 / 6학점
+   society : 사회성 교과목군 or 인간과 사회 영역 / 3학점
+    (사용자 지정 추가)
+
+   creativity : 창의성 교과목군 or 문화와 예술 영역 / 3학점
+    (사용자 지정 추가)
+
+ major : 전공 / 62학점
+  major_necessary : 전공필수 / 19학점
+    eneResDyn : 에너지자원역학(3학점)
+    eneEcoTecAdm : 에너지환경기술경영(3학점)
+    earPhyEng : 지구물리공학(3학점)
+    stoDynExp : 암석역학및실험(3학점)
+    oilGasEngExp : 석유가스공학및실험(3학점)
+    resEngPra : 자원공학실습(1학점)
+    resProEng : 자원처리공학(3학점)
+
+  major_optional : 전공선택 / 40학점
+    (사용자 지정 추가)
+
+  major_other : 공대 타학과개론 / 3학점
+    (사용자 지정 추가)
+
+ normal : 그 외
+    (사용자 지정 추가)
+
+----------------------------------------------------------------------------
+
+Class 위계구조
+(total)
+ Type : culture, major, normal
+  LectureField : culture_basic, culture_world, culture_engineering, major_necessary, major_optional, major_other
+   LectureGroup : thiExp, foreign, numAnaInf, sciThiExp, comInfApp, society, creativity
+   LectureWorld : lenLit, culArt, hisPhi, polEco, humSoc
+    Lecture : sciEngWri, math1, math2, engMat1, engMat2, physics1, phyExp1, physics2, phyExp2, physics, phyExp, chemistry1, cheExp1, chemistry2, cheExp2, chemistry, cheExp, earSysSci, earSysSciExp, computer, eneResDyn, eneEcoTecAdm, earPhyEng, stoDynExp, oilGasEngExp, resEngPra, resProEng, (사용자 지정 추가)
+
+----------------------------------------------------------------------------
+
+구현 방식
+
+-ListView 1개에 위의 항목을 TextView로 구현하여 터치 시마다 하위 항목을 추가/삭제.
+ -Type, LectureField, LectureGroup, LectureWorld 클래스에 viewSwitch를 설정.(ON 또는 OFF)
+ -각 클래스 별로 하위 클래스를 담아둘 수 있는 (ArrayList<CreditManager>) underManagers 및 클래스를 담기 위한 addUnderManager 메서드 설정.
+  -Layout 터치 시 해당 클래스의 viewSwitch를 조사하여 ON이면 하위 클래스 뷰를 creditManagers에서 삭제.
+   -하위 클래스 판단은 code 값이 해당 클래스의 code 값 보다 높은 것으로 확인.
+   -LectureLayout의 체크박스를 체크 했을 때 상위 Layout을 터치하면 onClickListener가 작동하지 않는 문제.
+    -getLectureLayout 메서드에서 터치할 때마다 notifyDataSetChanged 메서드를 실행하는 것으로 해결.
+  -Off인 경우 : adapter의 creditManagers에서 해당 뷰의 다음 index부터 해당 클래스의 underManagers의 요소들을 삽입.
+ -adapter의 creditManagers의 구성 요소에 변화를 발생시킬 경우 항상 notifyDataChanged 메서드를 함께 실행하여 thread 오류 방지.
+
+-LectureLayout은 CheckedTextView로 구성. 체크 시 Lecture 클래스 내의 multiplier의 값을 0 또는 1로 변환 -> getComCredit 메서드로 credit * multiplier 값을 반환하여 이수 학점 계산.
+ -스크롤 작동 시 체크박스가 화면을 벗어났다가 다시 나타나면 체크가 자동으로 해제되는 문제.
+  -MainAdapter의 getLecture 메서드에서 해당 Lecture의 multiplier를 조사하여 그에 따라 setCheck 함으로써 해결.
+
+-FreeLecture, AddedLecture 클래스는 사용자 지정 추가를 위함.
+ -FreeLecture 클래스는 사용자 입력을 받는 뷰 생성.
+  -클래스 내에 upperManager에는 상위 CreditManager 저장, num에는 이미 추가한 AddedLecture 수 저장.
+  -nameText에 과목명, creditText에 학점을 입력하고 addButton 클릭 시 입력한 과목명과 학점으로 AddedLecture 인스턴스가 생성되어 해당 upperManager에 추가됨.
+   -nameText와 creditText의 inputType을 각각 textPersonName과 number로 했을 때, 사용자의 폰이 nameText 입력시 자동완성 기능이 있는 자판일 경우 creditText로 넘어갈 때 자동완성 기능이 없는 자판으로 변하면서 nameText에 입력한 내용이 지워지는 현상 발생.
+    -creditText의 inputType을 textPersonName|number로 해도 같은 문제 해결 안됨.
+    -creditText의 inputType도 textPersonName으로 하는 것으로 문제 해결.
+  -addButton 실행 후 nameText와 creditText는 초기화.
+ -AddedManager 클래스는 추가된 뷰 생성.
+  -기본적인 레이아웃은 Lecture와 유사하나 deleteButton이 추가됨. 사용자가 추가한 과목은 자유롭게 삭제/수정할 수 있게 하기 위함.
+  -이를 위해 클래스 내에 upperManager에 상위 CreditManager 저장.
+
+-applyButton : apply 메서드를 사용자가 임의로 실행할 수 있도록 함.
+ -apply 메서드 : 사용자가 추가한 강의/학점 및 체크한 항목에 따라 이수 학점 현황을 계산하여 textView들에 반영.
+  -하위 단계의 credits를 수합하여 상위 단계의 credits 값에 저장. 최종적으로 totalCredits까지 수합한 뒤 activity_main의 totalCreditsTextView에 반영.
+  -수합하는 방식은 각 CreditManager 내의 sumCredits 메서드를 실행시켜 underManagers의 요소들의 credits의 총합을 구하는 과정을 하위단계에서부터 순차적으로 실행.
+   -이 때 Lecture 클래스의 getCredits 메서드는 (credit * multiplier)를 반환하게 함.
+   -multiplier는 해당 Lecture가 체크되어 있으면 1, 체크되어 있지 않으면 0의 값을 가짐.
+  -TypeLayout 이하 단계의 TextView는 스크롤를 작동시켜 화면에서 벗어나게 한 뒤 다시 나타나게 하면 자동으로 반영됨.
+  -onCreat 메서드 내에서 apply 메서드 실행. -> 앱 실행 시 자동 반영.
+
+-saveButton : save 메서드를 사용자가 임의로 실행할 수 있도록 함.
+ -save 메서드 : 사용자가 추가한 강의/학점 및 체크한 항목 저장.
+  -파일에 쓸 데이터를 저장하기 위해 Total 클래스 설정.
+   -implements Serializable. (CreditManger도 implements Serializable로 설정.)
+   -Type 형의 culture와 major, normal을 가지고 있음.
+   -파일에서 읽어왔음을 확인하기 위해 checker를 설정.
+    -읽어온 Total이 있으면 checker는 1이며, 읽어온 Total의 정보를 ListView에 set.
+    -읽어온 Total이 없으면 checker는 0이며, initialization 메서드 실행.
+     -initialization 메서드 : 사용자가 추가/체크한 항목이 없는 초기상태의 세팅을 실행.
+
+-closeButton : 앱 종료.(finish 메서드 실행)
+ -finish 메서드 실행 전 save 메서드를 실행함. -> 앱 종료 시 자동 저장.
