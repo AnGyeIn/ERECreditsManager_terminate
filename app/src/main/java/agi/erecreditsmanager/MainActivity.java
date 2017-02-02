@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +17,8 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import static agi.erecreditsmanager.DataManager.advEarChe;
+import static agi.erecreditsmanager.DataManager.advResGeo;
 import static agi.erecreditsmanager.DataManager.cheExp;
 import static agi.erecreditsmanager.DataManager.cheExp1;
 import static agi.erecreditsmanager.DataManager.cheExp2;
@@ -30,11 +35,15 @@ import static agi.erecreditsmanager.DataManager.culture;
 import static agi.erecreditsmanager.DataManager.culture_basic;
 import static agi.erecreditsmanager.DataManager.culture_engineering;
 import static agi.erecreditsmanager.DataManager.culture_world;
+import static agi.erecreditsmanager.DataManager.driEng;
 import static agi.erecreditsmanager.DataManager.earPhyEng;
 import static agi.erecreditsmanager.DataManager.earSysSci;
 import static agi.erecreditsmanager.DataManager.earSysSciExp;
+import static agi.erecreditsmanager.DataManager.eneEcoEng;
 import static agi.erecreditsmanager.DataManager.eneEcoTecAdm;
 import static agi.erecreditsmanager.DataManager.eneResDyn;
+import static agi.erecreditsmanager.DataManager.eneResFigAna;
+import static agi.erecreditsmanager.DataManager.eneResFut;
 import static agi.erecreditsmanager.DataManager.engMat1;
 import static agi.erecreditsmanager.DataManager.engMat2;
 import static agi.erecreditsmanager.DataManager.foreign;
@@ -46,16 +55,21 @@ import static agi.erecreditsmanager.DataManager.humSocFree;
 import static agi.erecreditsmanager.DataManager.lenLit;
 import static agi.erecreditsmanager.DataManager.lenLitFree;
 import static agi.erecreditsmanager.DataManager.major;
-import static agi.erecreditsmanager.DataManager.major_necessary;
-import static agi.erecreditsmanager.DataManager.major_optional;
+import static agi.erecreditsmanager.DataManager.major_necessary_from16;
+import static agi.erecreditsmanager.DataManager.major_necessary_to15;
+import static agi.erecreditsmanager.DataManager.major_optNec;
+import static agi.erecreditsmanager.DataManager.major_optional_from16;
+import static agi.erecreditsmanager.DataManager.major_optional_to15;
 import static agi.erecreditsmanager.DataManager.major_other;
 import static agi.erecreditsmanager.DataManager.math1;
 import static agi.erecreditsmanager.DataManager.math2;
+import static agi.erecreditsmanager.DataManager.newRenEne;
 import static agi.erecreditsmanager.DataManager.norFree;
 import static agi.erecreditsmanager.DataManager.normal;
 import static agi.erecreditsmanager.DataManager.numAnaInf;
 import static agi.erecreditsmanager.DataManager.oilGasEngExp;
-import static agi.erecreditsmanager.DataManager.optFree;
+import static agi.erecreditsmanager.DataManager.optFree_from16;
+import static agi.erecreditsmanager.DataManager.optFree_to15;
 import static agi.erecreditsmanager.DataManager.othFree;
 import static agi.erecreditsmanager.DataManager.phyExp;
 import static agi.erecreditsmanager.DataManager.phyExp1;
@@ -77,7 +91,10 @@ import static agi.erecreditsmanager.DataManager.thiExp;
 public class MainActivity extends AppCompatActivity {
 
     ListView listView;
-    TextView totalCreditsTextView;
+    TextView totalCreditsTextView, studentNumTextView;
+    LinearLayout studentNumLayout;
+    RelativeLayout totalLayout;
+    EditText studentNumEditText;
 
     String sdcardPath, filename;
 
@@ -86,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
     MainAdapter adapter;
     int totalCredits;
 
+    int studentNum;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +112,10 @@ public class MainActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listView);
         totalCreditsTextView = (TextView) findViewById(R.id.totalCreditsTextView);
-        totalCreditsTextView.setText("전체 학점 : " + totalCredits + "/130");
+        studentNumTextView = (TextView) findViewById(R.id.studentNumTextView);
+        studentNumLayout = (LinearLayout) findViewById(R.id.studentNumLayout);
+        studentNumEditText = (EditText) findViewById(R.id.studentNumEditText);
+        totalLayout = (RelativeLayout) findViewById(R.id.totalLayout);
 
         File sdcardFolder = Environment.getExternalStorageDirectory();
         sdcardPath = sdcardFolder.getAbsolutePath();
@@ -102,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
         File file = new File(filename);
 
-        total = new Total(false);
+        total = new Total(-1);
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -116,105 +138,179 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "불러오기 실패", Toast.LENGTH_LONG).show();
         }
 
-        if(!total.isChecker()) {
-            initialization();
-            total.setCulture(culture);
-            total.setMajor(major);
-            total.setNormal(normal);
-            total.setChecker(true);
+        if(total.getStudentNum() == -1) {
+            studentNumLayout.setVisibility(View.VISIBLE);
+            totalLayout.setVisibility(View.INVISIBLE);
+        } else {
+            studentNumLayout.setVisibility(View.INVISIBLE);
+            studentNumTextView.setText(total.getStudentNum() + "학번");
+            setting();
         }
-
-        apply();
-
-        adapter = new MainAdapter(this);
-
-        adapter.setCreditManager(total.getCulture());
-        adapter.setCreditManager(total.getMajor());
-        adapter.setCreditManager(total.getNormal());
-
-        listView.setAdapter(adapter);
     }
 
-    public void initialization() {
-        culture.addUnderManager(culture_basic);
+    public void initialization(int studentNum) {
+        if(studentNum <= 15) {  //15학번 이전
+            culture.addUnderManager(culture_basic);
 
-        culture_basic.addUnderManager(thiExp);
+            culture_basic.addUnderManager(thiExp);
 
-        thiExp.addUnderManager(sciEngWri);
+            thiExp.addUnderManager(sciEngWri);
 
-        culture_basic.addUnderManager(foreign);
-        foreign.addUnderManager(foreignFree);
+            culture_basic.addUnderManager(foreign);
+            foreign.addUnderManager(foreignFree);
 
-        culture_basic.addUnderManager(numAnaInf);
-        numAnaInf.addUnderManager(math1);
-        numAnaInf.addUnderManager(math2);
-        numAnaInf.addUnderManager(engMat1);
-        numAnaInf.addUnderManager(engMat2);
+            culture_basic.addUnderManager(numAnaInf);
+            numAnaInf.addUnderManager(math1);
+            numAnaInf.addUnderManager(math2);
+            numAnaInf.addUnderManager(engMat1);
+            numAnaInf.addUnderManager(engMat2);
 
-        culture_basic.addUnderManager(sciThiExp);
-        sciThiExp.addUnderManager(physics1);
-        sciThiExp.addUnderManager(phyExp1);
-        sciThiExp.addUnderManager(physics2);
-        sciThiExp.addUnderManager(phyExp2);
-        sciThiExp.addUnderManager(physics);
-        sciThiExp.addUnderManager(phyExp);
-        sciThiExp.addUnderManager(chemistry1);
-        sciThiExp.addUnderManager(cheExp1);
-        sciThiExp.addUnderManager(chemistry2);
-        sciThiExp.addUnderManager(cheExp2);
-        sciThiExp.addUnderManager(chemistry);
-        sciThiExp.addUnderManager(cheExp);
-        sciThiExp.addUnderManager(earSysSci);
-        sciThiExp.addUnderManager(earSysSciExp);
+            culture_basic.addUnderManager(sciThiExp);
+            sciThiExp.addUnderManager(physics1);
+            sciThiExp.addUnderManager(phyExp1);
+            sciThiExp.addUnderManager(physics2);
+            sciThiExp.addUnderManager(phyExp2);
+            sciThiExp.addUnderManager(physics);
+            sciThiExp.addUnderManager(phyExp);
+            sciThiExp.addUnderManager(chemistry1);
+            sciThiExp.addUnderManager(cheExp1);
+            sciThiExp.addUnderManager(chemistry2);
+            sciThiExp.addUnderManager(cheExp2);
+            sciThiExp.addUnderManager(chemistry);
+            sciThiExp.addUnderManager(cheExp);
+            sciThiExp.addUnderManager(earSysSci);
+            sciThiExp.addUnderManager(earSysSciExp);
 
-        culture_basic.addUnderManager(comInfApp);
-        comInfApp.addUnderManager(computer);
+            culture_basic.addUnderManager(comInfApp);
+            comInfApp.addUnderManager(computer);
 
-        culture.addUnderManager(culture_world);
+            culture.addUnderManager(culture_world);
 
-        culture_world.addUnderManager(lenLit);
-        lenLit.addUnderManager(lenLitFree);
+            culture_world.addUnderManager(lenLit);
+            lenLit.addUnderManager(lenLitFree);
 
-        culture_world.addUnderManager(culArt);
-        culArt.addUnderManager(culArtFree);
+            culture_world.addUnderManager(culArt);
+            culArt.addUnderManager(culArtFree);
 
-        culture_world.addUnderManager(hisPhi);
-        hisPhi.addUnderManager(hisPhiFree);
+            culture_world.addUnderManager(hisPhi);
+            hisPhi.addUnderManager(hisPhiFree);
 
-        culture_world.addUnderManager(polEco);
-        polEco.addUnderManager(polEcoFree);
+            culture_world.addUnderManager(polEco);
+            polEco.addUnderManager(polEcoFree);
 
-        culture_world.addUnderManager(humSoc);
-        humSoc.addUnderManager(humSocFree);
+            culture_world.addUnderManager(humSoc);
+            humSoc.addUnderManager(humSocFree);
 
-        culture.addUnderManager(culture_engineering);
+            culture.addUnderManager(culture_engineering);
 
-        culture_engineering.addUnderManager(society);
-        society.addUnderManager(socFree);
+            culture_engineering.addUnderManager(society);
+            society.addUnderManager(socFree);
 
-        culture_engineering.addUnderManager(creativity);
-        creativity.addUnderManager(creFree);
+            culture_engineering.addUnderManager(creativity);
+            creativity.addUnderManager(creFree);
 
-        major.addUnderManager(major_necessary);
-        major_necessary.addUnderManager(eneResDyn);
-        major_necessary.addUnderManager(eneEcoTecAdm);
-        major_necessary.addUnderManager(earPhyEng);
-        major_necessary.addUnderManager(stoDynExp);
-        major_necessary.addUnderManager(oilGasEngExp);
-        major_necessary.addUnderManager(resEngPra);
-        major_necessary.addUnderManager(resProEng);
+            major.addUnderManager(major_necessary_to15);
+            major_necessary_to15.addUnderManager(eneResFut);
+            major_necessary_to15.addUnderManager(eneResDyn);
+            major_necessary_to15.addUnderManager(advResGeo);
+            major_necessary_to15.addUnderManager(eneEcoTecAdm);
+            major_necessary_to15.addUnderManager(earPhyEng);
+            major_necessary_to15.addUnderManager(stoDynExp);
+            major_necessary_to15.addUnderManager(oilGasEngExp);
+            major_necessary_to15.addUnderManager(resEngPra);
+            major_necessary_to15.addUnderManager(resProEng);
+            major_necessary_to15.addUnderManager(eneResFigAna);
 
-        major.addUnderManager(major_optional);
-        major_optional.addUnderManager(optFree);
+            major.addUnderManager(major_optNec);
+            major_optNec.addUnderManager(driEng);
+            major_optNec.addUnderManager(newRenEne);
+            major_optNec.addUnderManager(advEarChe);
+            major_optNec.addUnderManager(eneEcoEng);
 
-        major.addUnderManager(major_other);
-        major_other.addUnderManager(othFree);
+            major.addUnderManager(major_optional_to15);
+            major_optional_to15.addUnderManager(optFree_to15);
 
-        normal.addUnderManager(norFree);
-    }
+            major.addUnderManager(major_other);
+            major_other.addUnderManager(othFree);
 
-    public void applyClicked(View view) {
-        apply();
+            normal.addUnderManager(norFree);
+        } else if(studentNum >= 16) {   //16학번 이후
+            culture.addUnderManager(culture_basic);
+
+            culture_basic.addUnderManager(thiExp);
+
+            thiExp.addUnderManager(sciEngWri);
+
+            culture_basic.addUnderManager(foreign);
+            foreign.addUnderManager(foreignFree);
+
+            culture_basic.addUnderManager(numAnaInf);
+            numAnaInf.addUnderManager(math1);
+            numAnaInf.addUnderManager(math2);
+            numAnaInf.addUnderManager(engMat1);
+            numAnaInf.addUnderManager(engMat2);
+
+            culture_basic.addUnderManager(sciThiExp);
+            sciThiExp.addUnderManager(physics1);
+            sciThiExp.addUnderManager(phyExp1);
+            sciThiExp.addUnderManager(physics2);
+            sciThiExp.addUnderManager(phyExp2);
+            sciThiExp.addUnderManager(physics);
+            sciThiExp.addUnderManager(phyExp);
+            sciThiExp.addUnderManager(chemistry1);
+            sciThiExp.addUnderManager(cheExp1);
+            sciThiExp.addUnderManager(chemistry2);
+            sciThiExp.addUnderManager(cheExp2);
+            sciThiExp.addUnderManager(chemistry);
+            sciThiExp.addUnderManager(cheExp);
+            sciThiExp.addUnderManager(earSysSci);
+            sciThiExp.addUnderManager(earSysSciExp);
+
+            culture_basic.addUnderManager(comInfApp);
+            comInfApp.addUnderManager(computer);
+
+            culture.addUnderManager(culture_world);
+
+            culture_world.addUnderManager(lenLit);
+            lenLit.addUnderManager(lenLitFree);
+
+            culture_world.addUnderManager(culArt);
+            culArt.addUnderManager(culArtFree);
+
+            culture_world.addUnderManager(hisPhi);
+            hisPhi.addUnderManager(hisPhiFree);
+
+            culture_world.addUnderManager(polEco);
+            polEco.addUnderManager(polEcoFree);
+
+            culture_world.addUnderManager(humSoc);
+            humSoc.addUnderManager(humSocFree);
+
+            culture.addUnderManager(culture_engineering);
+
+            culture_engineering.addUnderManager(society);
+            society.addUnderManager(socFree);
+
+            culture_engineering.addUnderManager(creativity);
+            creativity.addUnderManager(creFree);
+
+            major.addUnderManager(major_necessary_from16);
+            major_necessary_from16.addUnderManager(eneResDyn);
+            major_necessary_from16.addUnderManager(eneEcoTecAdm);
+            major_necessary_from16.addUnderManager(earPhyEng);
+            major_necessary_from16.addUnderManager(stoDynExp);
+            major_necessary_from16.addUnderManager(oilGasEngExp);
+            major_necessary_from16.addUnderManager(resEngPra);
+            major_necessary_from16.addUnderManager(resProEng);
+
+            major.addUnderManager(major_optional_from16);
+            major_optional_from16.addUnderManager(optFree_from16);
+
+            major.addUnderManager(major_other);
+            major_other.addUnderManager(othFree);
+
+            normal.addUnderManager(norFree);
+        }
     }
 
     public void apply() {
@@ -224,6 +320,9 @@ public class MainActivity extends AppCompatActivity {
 
         totalCredits = total.getCulture().getCredits() + total.getMajor().getCredits() + total.getNormal().getCredits();
         totalCreditsTextView.setText("전체 학점 : " + totalCredits + "/130");
+    }
+    public void applyClicked(View view) {
+        apply();
     }
 
     public void save() {
@@ -249,5 +348,38 @@ public class MainActivity extends AppCompatActivity {
     public void closeClicked(View view) {
         save();
         finish();
+    }
+
+    public void studentNumSave() {
+        try {
+            studentNum = Integer.parseInt(studentNumEditText.getText().toString());
+            studentNumLayout.setVisibility(View.INVISIBLE);
+            totalLayout.setVisibility(View.VISIBLE);
+            initialization(studentNum);
+            total.setCulture(culture);
+            total.setMajor(major);
+            total.setNormal(normal);
+            total.setStudentNum(studentNum);
+            studentNumTextView.setText(studentNum + "학번");
+            setting();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "학번은 숫자 2자리로 입력해주세요.", Toast.LENGTH_LONG).show();
+        }
+    }
+    public void studentNumSaveClicked(View view) {
+        studentNumSave();
+    }
+
+    public void setting() {
+        apply();
+
+        adapter = new MainAdapter(this);
+
+        adapter.setCreditManager(total.getCulture());
+        adapter.setCreditManager(total.getMajor());
+        adapter.setCreditManager(total.getNormal());
+
+        listView.setAdapter(adapter);
     }
 }

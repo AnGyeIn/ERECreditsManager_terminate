@@ -93,6 +93,7 @@ Class 위계구조
 
 구현 방식
 
+---[버전 1.0]---
 -ListView 1개에 위의 항목을 TextView로 구현하여 터치 시마다 하위 항목을 추가/삭제.
  -Type, LectureField, LectureGroup, LectureWorld 클래스에 viewSwitch를 설정.(ON 또는 OFF)
  -각 클래스 별로 하위 클래스를 담아둘 수 있는 (ArrayList<CreditManager>) underManagers 및 클래스를 담기 위한 addUnderManager 메서드 설정.
@@ -140,3 +141,21 @@ Class 위계구조
 
 -closeButton : 앱 종료.(finish 메서드 실행)
  -finish 메서드 실행 전 save 메서드를 실행함. -> 앱 종료 시 자동 저장.
+
+---[버전 2.0]---
+-학번 선택 기능 추가.
+ -추가 학번 : 14, 15.
+ -현재 선택된 학번을 표시하기 위한 studentNum 변수 지정, studentNumTextView에 '~학번'으로 반영.
+ -Total 클래스에도 내부변수로 studentNum 설정. (추후 타 과 업데이트를 고려해 학과 이름을 나타내는 dep 변수도 추가.)
+  -버전 1.0을 이미 사용중이던 사용자의 추가 입력을 없애기 위해 default를 -1로 설정.
+  -저장된 파일을 읽어와서 checker 값을 확인할 때 0인 경우 학번을 입력하는 창이 가시화 되도록.
+   -새 창은 LinearLayout(horizontal)에 TextView, EditText, Button으로 구성.
+    -studentNumLayout과 기존 뷰들의 중첩을 막기 위해 기존 뷰를 (RelativeLayout)totalLayout에 담고 visibility를 studentNumLayout과 항상 반대로 설정.
+   -(EditText)studentNumEditText에 학번을 입력한 뒤 (Button)studentNumSaveButton을 누르면 studentNumLayout 비가시화.
+    -이를 위해 studentNumSave 메서드 구현.
+     -initialization 메서드의 매개변수로 studentNum을 받도록 수정.
+      -전달받은 studentNum의 값에 따라 학번에 맞는 커리큘럼을 설정하도록 수정.
+     -initialization 메서드의 호출 위치를 studentNumSave 내로 이동.
+     -입력된 학번을 total의 studentNum에 저장.
+ -학번 입력 전 apply 메서드가 실행되면 안되므로 apply 메서드 이하를 실행하는 setting 메서드로 설정.
+  -읽어온 total의 checker가 1일 때, 또는 studentNumLayout에서 정상적으로 학번을 입력하고 studentNumSaveButton을 눌렀을 때 setting 메서드가 실행되도록 설정.
