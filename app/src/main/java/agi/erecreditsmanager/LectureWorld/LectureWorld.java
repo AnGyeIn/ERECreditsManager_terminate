@@ -11,8 +11,8 @@ public class LectureWorld extends CreditManager {
 
     String name;
     int credits;
-    int code = LECTURE_WORLD;
-    int viewSwitch = OFF;
+    final int code = LECTURE_WORLD;
+    boolean viewSwitch = OFF;
     ArrayList<CreditManager> underManagers = new ArrayList<CreditManager>();
 
     public LectureWorld(String name) {
@@ -31,10 +31,10 @@ public class LectureWorld extends CreditManager {
         return code;
     }
 
-    public int getViewSwitch() {
+    public boolean getViewSwitch() {
         return viewSwitch;
     }
-    public void setViewSwitch(int viewSwitch) {
+    public void setViewSwitch(boolean viewSwitch) {
         this.viewSwitch = viewSwitch;
     }
 

@@ -96,7 +96,7 @@ public class MainAdapter extends BaseAdapter {
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(((Type) creditManagers.get(j)).getViewSwitch() == ON)
+                if(((Type) creditManagers.get(j)).getViewSwitch())
                     for( ; ; ) {
                         if(((j+1) < getCount()) && (creditManagers.get(j).getCode() < creditManagers.get(j+1).getCode())) {
                             removeCreditManager(j+1);
@@ -128,7 +128,7 @@ public class MainAdapter extends BaseAdapter {
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(((LectureField) creditManagers.get(j)).getViewSwitch() == ON)
+                if(((LectureField) creditManagers.get(j)).getViewSwitch())
                     for( ; ; ) {
                         if(((j+1) < getCount()) && (creditManagers.get(j).getCode() < creditManagers.get(j+1).getCode())) {
                             removeCreditManager(j+1);
@@ -160,7 +160,7 @@ public class MainAdapter extends BaseAdapter {
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(((LectureGroup) creditManagers.get(j)).getViewSwitch() == ON)
+                if(((LectureGroup) creditManagers.get(j)).getViewSwitch())
                     for( ; ; ) {
                         if(((j+1) < getCount()) && (creditManagers.get(j).getCode() < creditManagers.get(j+1).getCode())) {
                             removeCreditManager(j+1);
@@ -192,7 +192,7 @@ public class MainAdapter extends BaseAdapter {
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(((LectureWorld) creditManagers.get(j)).getViewSwitch() == ON)
+                if(((LectureWorld) creditManagers.get(j)).getViewSwitch())
                     for( ; ; ) {
                         if(((j+1) < getCount()) && (creditManagers.get(j).getCode() < creditManagers.get(j+1).getCode())) {
                             removeCreditManager(j+1);
@@ -258,8 +258,9 @@ public class MainAdapter extends BaseAdapter {
                     freeLecture.getUpperManager().addUnderManager(freeLecture.getNum(), addedLecture);
                     freeLecture.incNum();
                     layout.setInitiation();
+                    creditManagers.add(j, addedLecture);
                     notifyDataSetChanged();
-                    Toast.makeText(context, "과목이 추가되었습니다.\n상위 탭을 닫았다가 다시 열어주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "과목이 추가되었습니다.", Toast.LENGTH_LONG).show();
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                     Toast.makeText(context, "학점은 반드시 숫자로 입력해주세요.", Toast.LENGTH_LONG).show();
@@ -297,14 +298,16 @@ public class MainAdapter extends BaseAdapter {
             }
         });
 
-        Button deleteButton = layout.getDeleteButton();
+        final int j = i;
+        final Button deleteButton = layout.getDeleteButton();
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
                     addedLecture.removeThis();
+                    removeCreditManager(j);
                     notifyDataSetChanged();
-                    Toast.makeText(context, "과목이 삭제되었습니다.\n상위 탭을 닫았다가 다시 열어주세요.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "과목이 삭제되었습니다.", Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(context, "과목 삭제 실패", Toast.LENGTH_LONG).show();

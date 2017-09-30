@@ -2,24 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <CheckedTextView
-        android:text="(학점)"
+    <HorizontalScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/addedLectureCreditTextView"
-        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-        android:textSize="16dp"
-        android:paddingTop="5dp" />
+        android:layout_height="wrap_content">
 
-    <Button
-        android:text="삭제"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/addedLectureCreditTextView"
-        android:layout_toEndOf="@+id/addedLectureCreditTextView"
-        android:id="@+id/deleteButton" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <CheckedTextView
+                android:id="@+id/addedLectureCreditTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:paddingTop="5dp"
+                android:text="(학점)"
+                android:textSize="16dp" />
+
+            <Button
+                android:id="@+id/deleteButton"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:text="삭제" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
 </RelativeLayout>

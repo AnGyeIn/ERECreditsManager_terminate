@@ -147,7 +147,7 @@ Class 위계구조
 ---[버전 2.0]---
 -학번 선택 기능 추가.
  -추가 학번 : 14, 15.
- -추가 과목 추가 및 변동
+ -과목 추가 및 변동
   (LectureField) major_necessary -> major_necessary_to15 : 전공필수 / 27학점 (15학번 이전)
                                     major_necessary_from16 : 전공필수 / 19학점 (16학번 이후)
   (LectureField) major_optNec (추가) : 전공선택필수 / 9학점 (15학번 이전)
@@ -177,3 +177,55 @@ Class 위계구조
      -입력된 학번을 total의 studentNum에 저장.
  -학번 입력 전 apply 메서드가 실행되면 안되므로 apply 메서드 이하를 실행하는 setting 메서드로 설정.
   -읽어온 total의 checker가 1일 때, 또는 studentNumLayout에서 정상적으로 학번을 입력하고 studentNumSaveButton을 눌렀을 때 setting 메서드가 실행되도록 설정.
+
+---[버전 3.0]---
+-13학번 커리큘럼 추가
+ -과목 및 변동
+  (LectureField) keyCulture (추가) : 핵심교양 / 9학점
+  (LectureField) major_necessary_to15 : (삭제)
+  (LectureField) major_necessary_from16 -> major_necessary : 전공필수 / 19학점
+  (LectureField) major_optional_to15 : (삭제)
+  (LectureField) major_optional_from16 -> major_optional : 전공선택 / 40학점
+  (LectureWorld) litArt (추가) : 문학과 예술
+  (LectureWorld) socIde (추가) : 사회와 이념
+  (Lecture) korean (추가) : 대학국어(3학점)
+  (Lecture) biology1 (추가) : 생물학1(3학점)
+  (Lecture) bioExp1 (추가) : 생물학실험1(1학점)
+  (Lecture) biology2 (추가) : 생물학2(3학점)
+  (Lecture) bioExp2 (추가) : 생물학실험2(1학점)
+  (Lecture) biology (추가) : 생물학(3학점)
+  (Lecture) bioExp (추가) : 생물학실험(1학점)
+  (Lecture) statistics (추가) : 통계학(3학점)
+  (Lecture) staExp (추가) : 통계학실험(1학점)
+  (FreeLecture) litArtFree (추가) : 문학과 예술 사용자 지정 추가
+  (FreeLecture) socIdeFree (추가) : 사회와 이념 사용자 지정 추가
+-클래스 별 메서드 추가
+ Type : culture(교양), normal(그 외) 등이 학번별로 최소 이수 학점이 다른 경우 initialization()에서 수정할 수 있도록 setMinCredits() 추가.
+ LectureField : major_necessary(전공필수), major_optional(전공선택) 등이 학번별로 최소 이수 학점이 다른 경우 initialization()에서 수정할 수 있도록 setMinCredits() 추가. 
+ LectureGroup : foreign(외국어) 등이 13학번 이전에선 "대학영어 또는 고급영어"이므로 initialization()에서 수정할 수 있도록 setName() 추가.
+ Lecture : chemistry1(화학1), chemistry2(화학2)가 13학번 이전에선 "화학1(화학의 기본1)", "화학2(화학의 기본2)"이므로 initialization()에서 수정할 수 있도록 setName() 추가.
+-메모리 및 코딩 스타일 개선
+ -탭이 오픈인지 체크하기 위한 Type, LectureField, LectureGroup, LectureWorld의 인스턴스 변수였던 viewSwitch를 int형에서 boolean형으로 변경
+  -이에 따라 해당 클래스들의 getViewSwitch()의 반환형과 setViewSwitch의 파라미터를 int에서 boolean으로 변경
+  -또한 MainAdapter에서 각 layout의 OnClickListener에서 오픈을 체크하는 if 문에서 조건부를 (~.getViewSwitch() == ON)에서 (~.getViewSwitch())로 변경 (getViewSwtich()의 반환형 자체가 boolean형이기 때문)
+ -Type, LectureField, LectureGroup, LectureWorld, Lecture, FreeLecture, AddedLecture의 인스턴수 변수였던 code를 final로 변경
+-긴 과목명 이슈 개선
+ -사용자가 추가한 과목의 과목명이 긴 경우 삭제 버튼이 화면 밖으로 밀려나는 이슈 발견.
+ -addlecture.xml에서 addedLectureCreditTextView와 deleteButton을 모두 HorizontalScrollView 안으로 넣어서 해결
+-추가 과목 삭제 이슈 + 과목 추가/삭제 시 상위 탭 개폐 이슈 개선
+ -사용자가 추가한 과목을 한 번 삭제한 상태에서 상위 탭을 닫고 다시 열기 전에 삭제 버튼을 또 누를 경우 -> 상위 탭을 닫았다가 다시 열어서 과목을 추가하려고 하면 오류 발생으로 앱이 중지되는 이슈 발견.
+  -삭제 버튼을 눌렀을 때 AddedLecture.removeThis()를 통해 FreeLecture.decNum()이 실행되는데, 버튼을 눌러서 이미 decNum을 실행시킨 상태에서 버튼을 다시 누르면 decNum이 추가로 실해되어, 과목 추가 시 인덱스 오류 발생.
+ -사용자가 과목을 추가/삭제 했을 때 바로 화면에 반영되지 않고 상위 탭을 닫았다가 다시 열어야 보이는 이슈.
+  -(임시 방편)기존 버전에서는 토스트 메시지로 사용자가 상위 탭을 닫고 다시 열도록 유도.
+ -추가 및 삭제 시 MainAdapter의 CreditManagers의 해당 인덱스에 직접 AddedLecture를 삽입/삭제 하도록 함.
+  -추가/삭제가 즉시 반영.
+  -삭제가 즉시 반영되므로 삭제 버튼을 중복하여 누를 수 없게 됨.
+-저장소 접근 권한 관련 이슈 개선
+ -마시멜로 이상 버전에서 저장소 접근 권한을 위험 권한으로 분류하면서 메니페스트 등록만으로는 저장 기능이 정상 작동하지 않는 이슈.
+  -(임시 방편)기존 버전에서는 플레이스토어 앱 페이지 공지를 통해 사용자가 직접 단말기 설정에서 앱의 권한을 설정할 것을 유도.
+ -위험 권한 부여를 요청하는 대화상자를 띄우는 메서드(requestPermissions()) 추가.(마시멜로 이상 버전 기기에서 확인필요)
+-학번 설정 변경 기능 추가
+ -changeStudentNumButton : 대화상자를 띄워서 사용자가 changeStudentNum()을 임의로 사용할 수 있게 함.
+  -changeStudentNum() : totalLayout과 studentNumLayout의 visibility를 뒤바꾸고, clearAll() 실행.
+   -clearAll() : DataManager에서와 같이 모든 Type, LectureField, LectureGroup, LectureWorld, Lecture, FreeLecture 객체들을 초기화.
+    -사용자가 새로운 studentNum을 입력한 뒤 studentNumSaveButton을 눌렀을 때 studentNumSave()를 통해 initialization()이 실행되면 기존의 데이터(각 객체들의 상하관계)가 중복되는 것을 방지하기 위함.

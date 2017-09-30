@@ -9,7 +9,7 @@ public class Lecture extends CreditManager {
     String name;
     int credit;
     int multiplier;
-    int code = LECTURE;
+    final int code = LECTURE;
 
     public Lecture(String name, int credit) {
         this.name = name;
@@ -18,6 +18,9 @@ public class Lecture extends CreditManager {
 
     public String getName() {
         return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getCredit() {

@@ -11,99 +11,107 @@
     tools:context="agi.erecreditsmanager.MainActivity">
 
     <RelativeLayout
+        android:id="@+id/totalLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/totalLayout">
-
-        <TextView
-            android:text="학번"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/studentNumTextView" />
-
-        <TextView
-            android:text="전체 학점 : 0/130"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/totalCreditsTextView"
-            android:layout_below="@+id/studentNumTextView"/>
-
-        <Button
-            android:text="반영"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_toRightOf="@+id/totalCreditsTextView"
-            android:layout_toEndOf="@+id/totalCreditsTextView"
-            android:id="@+id/applyButton"
-            android:onClick="applyClicked"
-            android:padding="0dp"
-            android:layout_below="@+id/studentNumTextView"/>
-
-        <Button
-            android:text="저장"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_alignBottom="@+id/applyButton"
-            android:layout_toRightOf="@+id/applyButton"
-            android:layout_toEndOf="@+id/applyButton"
-            android:id="@+id/saveButton"
-            android:onClick="saveClicked"
-            android:padding="0dp"/>
-
-        <Button
-            android:text="닫기"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:id="@+id/closeButton"
-            android:onClick="closeClicked"
-            android:padding="0dp"
-            android:layout_toRightOf="@+id/saveButton"
-            android:layout_toEndOf="@+id/saveButton"
-            android:layout_below="@+id/studentNumTextView"/>
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/applyButton"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/listView" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/studentNumLayout"
         android:visibility="visible">
 
         <TextView
-            android:text="학번 입력 : "
+            android:id="@+id/studentNumTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="학번" />
+
+        <Button
+            android:id="@+id/changeStudentNumButton"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@+id/studentNumTextView"
+            android:layout_toRightOf="@+id/studentNumTextView"
+            android:onClick="changeStudentNumClicked"
+            android:padding="0dp"
+            android:text="학번 수정"/>
+
+        <TextView
+            android:id="@+id/totalCreditsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/changeStudentNumButton"
+            android:text="전체 학점 : 0/130" />
+
+        <Button
+            android:id="@+id/applyButton"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@+id/totalCreditsTextView"
+            android:layout_toRightOf="@+id/totalCreditsTextView"
+            android:onClick="applyClicked"
+            android:padding="0dp"
+            android:text="반영" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@+id/totalCreditsTextView"
+            android:layout_toRightOf="@+id/applyButton"
+            android:onClick="saveClicked"
+            android:padding="0dp"
+            android:text="저장" />
+
+        <Button
+            android:id="@+id/closeButton"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@+id/totalCreditsTextView"
+            android:layout_toRightOf="@+id/saveButton"
+            android:onClick="closeClicked"
+            android:padding="0dp"
+            android:text="닫기" />
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/applyButton" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/studentNumLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <TextView
             android:id="@+id/textView2"
-            android:layout_weight="1" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="학번 입력 : " />
 
         <EditText
+            android:id="@+id/studentNumEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/studentNumEditText"
             android:layout_weight="1"
+            android:ems="10"
             android:hint="ex) 16학번이면 '16'입력"
+            android:inputType="textPersonName"
             android:textSize="14sp" />
 
         <Button
-            android:text="확인"
+            android:id="@+id/studentNumSaveButton"
             android:layout_width="60dp"
             android:layout_height="30dp"
-            android:id="@+id/studentNumSaveButton"
             android:layout_weight="1"
+            android:onClick="studentNumSaveClicked"
             android:padding="0dp"
-            android:onClick="studentNumSaveClicked" />
+            android:text="확인" />
     </LinearLayout>
 
 </RelativeLayout>

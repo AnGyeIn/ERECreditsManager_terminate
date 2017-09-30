@@ -10,7 +10,7 @@ public class AddedLecture extends CreditManager {
     String name;
     int credit;
     int multiplier;
-    int code = ADDED_LECTURE;
+    final int code = ADDED_LECTURE;
     CreditManager upperManager;
 
     public AddedLecture(String name, int credit, CreditManager upperManager) {
