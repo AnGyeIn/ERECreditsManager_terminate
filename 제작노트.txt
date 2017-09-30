@@ -10,7 +10,7 @@ total : 교양 + 전공 / 130학점
     sciEngWri : 과학과 기술 글쓰기(3학점)
 
    foreign : 외국어 2개 교과목(TEPS 900점 이하 영어 1과목 필수) / 4학점
-    (사용자 지정 추가)
+    foreignFree : 외국어 사용자 지정 추가
 
    numAnaInf : 수량적 분석과 추론 / 12학점
     math1 : (고급)수학 및 연습1(3학점)
@@ -39,26 +39,26 @@ total : 교양 + 전공 / 130학점
 
   culture_world : 학문의 세계(2개 영역 이상) / 6학점
    lenLit : 언어와 문학
-    (사용자 지정 추가)
+    lenLitFree : 언어와 문학 사용자 지정 추가
 
    culArt : 문화와 예술
-    (사용자 지정 추가)
+    culArtFree : 문화와 예술 사용자 지정 추가
 
    hisPhi : 역사와 철학
-    (사용자 지정 추가)
+    hisPhiFree : 역사와 철학 사용자 지정 추가
 
    polEco : 정치와 경제
-    (사용자 지정 추가)
+    polEcoFree : 정치와 경제 사용자 지정 추가
 
    humSoc : 인간과 사회
-    (사용자 지정 추가)
+    humSocFree : 인간과 사회 사용자 지정 추가
 
   culture_engineering : 공대 사회/창의성 / 6학점
    society : 사회성 교과목군 or 인간과 사회 영역 / 3학점
-    (사용자 지정 추가)
+    socFree : 사회성 사용자 지정 추가
 
    creativity : 창의성 교과목군 or 문화와 예술 영역 / 3학점
-    (사용자 지정 추가)
+    creFree : 창의성 사용자 지정 추가
 
  major : 전공 / 62학점
   major_necessary : 전공필수 / 19학점
@@ -71,13 +71,13 @@ total : 교양 + 전공 / 130학점
     resProEng : 자원처리공학(3학점)
 
   major_optional : 전공선택 / 40학점
-    (사용자 지정 추가)
+    optFree : 전공선택 사용자 지정 추가
 
   major_other : 공대 타학과개론 / 3학점
-    (사용자 지정 추가)
+    othFree : 타학과개론 사용자 지정 추가
 
  normal : 그 외
-    (사용자 지정 추가)
+    norFree : 그 외 사용자 지정 추가
 
 ----------------------------------------------------------------------------
 
@@ -88,11 +88,14 @@ Class 위계구조
    LectureGroup : thiExp, foreign, numAnaInf, sciThiExp, comInfApp, society, creativity
    LectureWorld : lenLit, culArt, hisPhi, polEco, humSoc
     Lecture : sciEngWri, math1, math2, engMat1, engMat2, physics1, phyExp1, physics2, phyExp2, physics, phyExp, chemistry1, cheExp1, chemistry2, cheExp2, chemistry, cheExp, earSysSci, earSysSciExp, computer, eneResDyn, eneEcoTecAdm, earPhyEng, stoDynExp, oilGasEngExp, resEngPra, resProEng, (사용자 지정 추가)
+    FreeLecture : 
+    AddedLecture : (사용자 지정 추가로 생성)
 
 ----------------------------------------------------------------------------
 
 구현 방식
 
+---[버전 1.0]---
 -ListView 1개에 위의 항목을 TextView로 구현하여 터치 시마다 하위 항목을 추가/삭제.
  -Type, LectureField, LectureGroup, LectureWorld 클래스에 viewSwitch를 설정.(ON 또는 OFF)
  -각 클래스 별로 하위 클래스를 담아둘 수 있는 (ArrayList<CreditManager>) underManagers 및 클래스를 담기 위한 addUnderManager 메서드 설정.
@@ -140,3 +143,37 @@ Class 위계구조
 
 -closeButton : 앱 종료.(finish 메서드 실행)
  -finish 메서드 실행 전 save 메서드를 실행함. -> 앱 종료 시 자동 저장.
+
+---[버전 2.0]---
+-학번 선택 기능 추가.
+ -추가 학번 : 14, 15.
+ -추가 과목 추가 및 변동
+  (LectureField) major_necessary -> major_necessary_to15 : 전공필수 / 27학점 (15학번 이전)
+                                    major_necessary_from16 : 전공필수 / 19학점 (16학번 이후)
+  (LectureField) major_optNec (추가) : 전공선택필수 / 9학점 (15학번 이전)
+  (LectureField) major_optional -> major_optional_to15 : 전공선택 / 23학점 (15학번 이전)
+                                   major_optional_from16 : 전공선택 / 40학점 (16학번 이후)
+  (Lecture) eneResFut (추가) : 에너지자원과미래(2학점)
+  (Lecture) advResGeo (추가) : 응용자원지질(3학점)
+  (Lecture) eneResFigAna (추가) : 에너지자원수치해석(3학점)
+  (Lecture) driEng (추가) : 시추공학(3학점)
+  (Lecture) newRenEne (추가) : 신재생에너지(3학점)
+  (Lecture) advEarChe (추가) : 응용지구화학(3학점)
+  (Lecture) eneEcoEng (추가) : 에너지환경공학(3학점)
+  (FreeLecture) optFree -> optFree_to15 : 전공선택 사용자 지정 추가 (15학번 이전)
+                           optFree_from16 : 전공선택 사용자 지정 추가 (16학번 이후)
+ -현재 선택된 학번을 표시하기 위한 studentNum 변수 지정, studentNumTextView에 '~학번'으로 반영.
+ -Total 클래스에도 내부변수로 checker를 삭제하고 studentNum 설정. (추후 타 과 업데이트를 고려해 학과 이름을 나타내는 dep 변수도 추가.)
+  -checker의 역할(저장된 total이 있는지 확인)은 studentNum이 대체.
+   -읽어온 Total이 있으면 studentNum은 이전에 사용자가 입력한 학번 -> 새 창(studentNumLayout)을 비가시화하고 진행.
+   -읽어온 Total이 없으면 studentNum은 -1 -> studentNumLayout을 가시화하고 진행.
+   -studentNumLayout은 LinearLayout(horizontal)에 TextView, EditText, Button으로 구성.
+    -studentNumLayout과 기존 뷰들의 중첩을 막기 위해 기존 뷰를 (RelativeLayout)totalLayout에 담고 visibility를 studentNumLayout과 항상 반대로 설정.
+   -(EditText)studentNumEditText에 학번을 입력한 뒤 (Button)studentNumSaveButton을 누르면 studentNumLayout 비가시화.
+    -이를 위해 studentNumSave 메서드 구현.
+     -initialization 메서드의 매개변수로 studentNum을 받도록 수정.
+      -전달받은 studentNum의 값에 따라 학번에 맞는 커리큘럼을 설정하도록 수정.
+     -initialization 메서드의 호출 위치를 studentNumSave 내로 이동.
+     -입력된 학번을 total의 studentNum에 저장.
+ -학번 입력 전 apply 메서드가 실행되면 안되므로 apply 메서드 이하를 실행하는 setting 메서드로 설정.
+  -읽어온 total의 checker가 1일 때, 또는 studentNumLayout에서 정상적으로 학번을 입력하고 studentNumSaveButton을 눌렀을 때 setting 메서드가 실행되도록 설정.
