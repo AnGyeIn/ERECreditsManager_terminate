@@ -13,8 +13,8 @@ public class Type extends CreditManager {
     String name;
     int minCredits;
     int credits;
-    int code = TYPE;
-    int viewSwitch = OFF;
+    final int code = TYPE;
+    boolean viewSwitch = OFF;
     ArrayList<CreditManager> underManagers = new ArrayList<CreditManager>();
 
     public Type(String name, int minCredits) {
@@ -38,10 +38,10 @@ public class Type extends CreditManager {
         return code;
     }
 
-    public int getViewSwitch() {
+    public boolean getViewSwitch() {
         return viewSwitch;
     }
-    public void setViewSwitch(int viewSwitch) {
+    public void setViewSwitch(boolean viewSwitch) {
         this.viewSwitch = viewSwitch;
     }
 

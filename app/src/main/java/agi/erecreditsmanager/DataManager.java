@@ -9,8 +9,8 @@ import agi.erecreditsmanager.Type.Type;
 
 public class DataManager {
 
-    final public static int OFF = 0;
-    final public static int ON = 1;
+    final public static boolean OFF = false;
+    final public static boolean ON = true;
 
 
     //Type

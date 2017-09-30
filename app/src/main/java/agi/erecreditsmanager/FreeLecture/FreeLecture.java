@@ -6,7 +6,7 @@ import static agi.erecreditsmanager.DataManager.FREE_LECTURE;
 
 public class FreeLecture extends CreditManager {
 
-    int code = FREE_LECTURE;
+    final int code = FREE_LECTURE;
     CreditManager upperManager;
     int num;
 

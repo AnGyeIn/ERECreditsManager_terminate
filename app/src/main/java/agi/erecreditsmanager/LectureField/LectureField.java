@@ -14,8 +14,8 @@ public class LectureField extends CreditManager {
     String name;
     int minCredits;
     int credits;
-    int code = LECTURE_FIELD;
-    int viewSwitch = OFF;
+    final int code = LECTURE_FIELD;
+    boolean viewSwitch = OFF;
     ArrayList<CreditManager> underManagers = new ArrayList<CreditManager>();
 
     public LectureField(String name, int minCredits) {
@@ -39,10 +39,10 @@ public class LectureField extends CreditManager {
         return code;
     }
 
-    public int getViewSwitch() {
+    public boolean getViewSwitch() {
         return viewSwitch;
     }
-    public void setViewSwitch(int viewSwitch) {
+    public void setViewSwitch(boolean viewSwitch) {
         this.viewSwitch = viewSwitch;
     }
 
