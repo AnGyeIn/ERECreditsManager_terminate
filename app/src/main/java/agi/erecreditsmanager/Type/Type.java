@@ -29,6 +29,9 @@ public class Type extends CreditManager {
     public int getMinCredits() {
         return minCredits;
     }
+    public void setMinCredits(int minCredits) {
+        this.minCredits = minCredits;
+    }
 
     public int getCredits() {
         return credits;

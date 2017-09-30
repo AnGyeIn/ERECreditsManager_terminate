@@ -19,6 +19,9 @@ public class Lecture extends CreditManager {
     public String getName() {
         return name;
     }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getCredit() {
         return credit;

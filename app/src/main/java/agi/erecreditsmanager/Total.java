@@ -4,14 +4,14 @@ import java.io.Serializable;
 
 import agi.erecreditsmanager.Type.Type;
 
-public class Total3 implements Serializable {
+public class Total implements Serializable {
 
     Type culture, major, normal;
 
     int studentNum;
     String dep; //과 이름 - 추후 타 과 사용자를 위한 업데이트를 고려해 설정해둔 변수.
 
-    public Total3(int studentNum) {
+    public Total(int studentNum) {
         this.studentNum = studentNum;
     }
 

@@ -24,9 +24,15 @@ public class LectureGroup extends CreditManager {
     public String getName() {
         return name;
     }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getMinCredits() {
         return minCredits;
+    }
+    public void setMinCredits(int minCredits) {
+        this.minCredits = minCredits;
     }
 
     public int getCredits() {

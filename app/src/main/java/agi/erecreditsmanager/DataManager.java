@@ -23,13 +23,12 @@ public class DataManager {
     //LectureField
     final public static int LECTURE_FIELD = 1;
     static LectureField culture_basic = new LectureField("학문의 기초", 34);
+    static LectureField keyCulture = new LectureField("핵심교양", 9);
     static LectureField culture_world = new LectureField("학문의 세계(2개 영역 이상)", 6);
     static LectureField culture_engineering = new LectureField("공대 사회/창의성", 6);
-    static LectureField major_necessary_to15 = new LectureField("전공필수", 27);
-    static LectureField major_necessary_from16 = new LectureField("전공필수", 19);
+    static LectureField major_necessary = new LectureField("전공필수", 19);
     static LectureField major_optNec = new LectureField("전공선택필수", 9);
-    static LectureField major_optional_to15 = new LectureField("전공선택", 23);
-    static LectureField major_optional_from16 = new LectureField("전공선택", 40);
+    static LectureField major_optional = new LectureField("전공선택", 40);
     static LectureField major_other = new LectureField("공대 타학과개론", 3);
 
     //LectureGroup
@@ -44,6 +43,8 @@ public class DataManager {
 
     //LectureWorld
     final public static int LECTURE_WORLD = 3;
+    static LectureWorld litArt = new LectureWorld("문학과 예술");
+    static LectureWorld socIde = new LectureWorld("사회와 이념");
     static LectureWorld lenLit = new LectureWorld("언어와 문학");
     static LectureWorld culArt = new LectureWorld("문화와 예술");
     static LectureWorld hisPhi = new LectureWorld("역사와 철학");
@@ -53,6 +54,7 @@ public class DataManager {
     //Lecture
     final public static int LECTURE = 4;
     static Lecture sciEngWri = new Lecture("과학과 기술 글쓰기", 3);
+    static Lecture korean = new Lecture("대학국어", 3);
     static Lecture math1 = new Lecture("(고급)수학 및 연습1", 3);
     static Lecture math2 = new Lecture("(고급)수학 및 연습2", 3);
     static Lecture engMat1 = new Lecture("공학수학1", 3);
@@ -69,19 +71,24 @@ public class DataManager {
     static Lecture cheExp2 = new Lecture("화학실험2", 1);
     static Lecture chemistry = new Lecture("화학", 3);
     static Lecture cheExp = new Lecture("화학실험", 1);
+    static Lecture biology1 = new Lecture("생물학1", 3);
+    static Lecture bioExp1 = new Lecture("생물학실험1", 1);
+    static Lecture biology2 = new Lecture("생물학2", 3);
+    static Lecture bioExp2 = new Lecture("생물학실험2", 1);
+    static Lecture biology = new Lecture("생물학", 3);
+    static Lecture bioExp = new Lecture("생물학실험", 1);
+    static Lecture statistics = new Lecture("통계학", 3);
+    static Lecture staExp = new Lecture("통계학실험", 1);
     static Lecture earSysSci = new Lecture("지구시스템과학", 3);
     static Lecture earSysSciExp = new Lecture("지구시스템과학실험", 1);
     static Lecture computer = new Lecture("컴퓨터의 개념 및 실습", 3);
-    //15학번 이전 전공필수(16학번 전공필수에 추가)
     static Lecture eneResFut = new Lecture("에너지자원과미래", 2);
     static Lecture advResGeo = new Lecture("응용자원지질", 3);
     static Lecture eneResFigAna = new Lecture("에너지자원수치해석", 3);
-    //15학번 이전 전공선택필수
     static Lecture driEng = new Lecture("시추공학", 3);
     static Lecture newRenEne = new Lecture("신재생에너지", 3);
     static Lecture advEarChe = new Lecture("응용지구화학", 3);
     static Lecture eneEcoEng = new Lecture("에너지환경공학", 3);
-    //16학번 이후 전공필수
     static Lecture eneResDyn = new Lecture("에너지자원역학", 3);
     static Lecture eneEcoTecAdm = new Lecture("에너지환경기술경영", 3);
     static Lecture earPhyEng = new Lecture("지구물리공학", 3);
@@ -93,6 +100,8 @@ public class DataManager {
     //FreeLecture
     final public static int FREE_LECTURE = 5;
     static FreeLecture foreignFree = new FreeLecture(foreign, 0);
+    static FreeLecture litArtFree = new FreeLecture(litArt, 0);
+    static FreeLecture socIdeFree = new FreeLecture(socIde, 0);
     static FreeLecture lenLitFree = new FreeLecture(lenLit, 0);
     static FreeLecture culArtFree = new FreeLecture(culArt, 0);
     static FreeLecture hisPhiFree = new FreeLecture(hisPhi, 0);
@@ -100,12 +109,10 @@ public class DataManager {
     static FreeLecture humSocFree = new FreeLecture(humSoc, 0);
     static FreeLecture socFree = new FreeLecture(society, 0);
     static FreeLecture creFree = new FreeLecture(creativity, 0);
-    static FreeLecture optFree_to15 = new FreeLecture(major_optional_to15, 0);
-    static FreeLecture optFree_from16 = new FreeLecture(major_optional_from16, 0);
+    static FreeLecture optFree = new FreeLecture(major_optional, 0);
     static FreeLecture othFree = new FreeLecture(major_other, 0);
     static FreeLecture norFree = new FreeLecture(normal, 0);
 
     //AddedLecture
     final public static int ADDED_LECTURE = 6;
-
 }
