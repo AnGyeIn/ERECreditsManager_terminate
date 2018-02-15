@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -30,7 +31,17 @@
             android:layout_toRightOf="@+id/studentNumTextView"
             android:onClick="changeStudentNumClicked"
             android:padding="0dp"
-            android:text="학번 수정"/>
+            android:text="학번 수정" />
+
+        <Button
+            android:id="@+id/multiMajorButton"
+            android:layout_width="180dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@+id/studentNumTextView"
+            android:layout_toRightOf="@+id/changeStudentNumButton"
+            android:onClick="onMultiMajorButtonClicked"
+            android:padding="0dp"
+            android:text="전공과정 변경(복수/부전공)" />
 
         <TextView
             android:id="@+id/totalCreditsTextView"
@@ -71,13 +82,39 @@
             android:padding="0dp"
             android:text="닫기" />
 
+        <Button
+            android:id="@+id/forLecOpenButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@id/applyButton"
+            android:onClick="openForLecLayout"
+            android:text="외국어진행강좌 수강 체크" />
+
+        <CheckBox
+            android:id="@+id/lifeRespectCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/forLecOpenButton"
+            android:text="생명존중(자살예방)교육 이수 (16학번 이후 필수)" />
+
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/applyButton" />
+            android:layout_below="@+id/lifeRespectCheckBox"
+            android:layout_above="@+id/adviceButton">
+        </ListView>
+
+        <ImageButton
+            android:id="@+id/adviceButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:onClick="onAdviceButtonClicked"
+            app:srcCompat="@android:drawable/ic_menu_info_details" />
+
     </RelativeLayout>
 
     <LinearLayout
@@ -85,7 +122,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <TextView
             android:id="@+id/textView2"
@@ -112,6 +149,62 @@
             android:onClick="studentNumSaveClicked"
             android:padding="0dp"
             android:text="확인" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/forLecLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/forLecTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1과목 이상의 전공을 포함해 3과목 이상 외국어진행강좌(대학영어 제외) 수강" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/forLecSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0" />
+
+            <EditText
+                android:id="@+id/forLecSpinnerEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="과목명을 입력하세요."
+                android:textSize="16dp" />
+
+            <Button
+                android:id="@+id/forLecAddButton"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:onClick="addForLecture"
+                android:text="추가"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/forLecListView"
+            android:layout_width="match_parent"
+            android:layout_height="360dp" />
+
+        <Button
+            android:id="@+id/forLecButton"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:onClick="closeForLecLayout"
+            android:padding="0dp"
+            android:text="닫기" />
     </LinearLayout>
 
 </RelativeLayout>

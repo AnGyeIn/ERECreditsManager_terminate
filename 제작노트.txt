@@ -214,7 +214,7 @@ Class 위계구조
  -addlecture.xml에서 addedLectureCreditTextView와 deleteButton을 모두 HorizontalScrollView 안으로 넣어서 해결
 -추가 과목 삭제 이슈 + 과목 추가/삭제 시 상위 탭 개폐 이슈 개선
  -사용자가 추가한 과목을 한 번 삭제한 상태에서 상위 탭을 닫고 다시 열기 전에 삭제 버튼을 또 누를 경우 -> 상위 탭을 닫았다가 다시 열어서 과목을 추가하려고 하면 오류 발생으로 앱이 중지되는 이슈 발견.
-  -삭제 버튼을 눌렀을 때 AddedLecture.removeThis()를 통해 FreeLecture.decNum()이 실행되는데, 버튼을 눌러서 이미 decNum을 실행시킨 상태에서 버튼을 다시 누르면 decNum이 추가로 실해되어, 과목 추가 시 인덱스 오류 발생.
+  -삭제 버튼을 눌렀을 때 AddedLecture.removeThis()를 통해 FreeLecture.decNum()이 실행되는데, 버튼을 눌러서 이미 decNum을 실행시킨 상태에서 버튼을 다시 누르면 decNum이 추가로 실행되어, 과목 추가 시 인덱스 오류 발생.
  -사용자가 과목을 추가/삭제 했을 때 바로 화면에 반영되지 않고 상위 탭을 닫았다가 다시 열어야 보이는 이슈.
   -(임시 방편)기존 버전에서는 토스트 메시지로 사용자가 상위 탭을 닫고 다시 열도록 유도.
  -추가 및 삭제 시 MainAdapter의 CreditManagers의 해당 인덱스에 직접 AddedLecture를 삽입/삭제 하도록 함.
@@ -223,9 +223,42 @@ Class 위계구조
 -저장소 접근 권한 관련 이슈 개선
  -마시멜로 이상 버전에서 저장소 접근 권한을 위험 권한으로 분류하면서 메니페스트 등록만으로는 저장 기능이 정상 작동하지 않는 이슈.
   -(임시 방편)기존 버전에서는 플레이스토어 앱 페이지 공지를 통해 사용자가 직접 단말기 설정에서 앱의 권한을 설정할 것을 유도.
- -위험 권한 부여를 요청하는 대화상자를 띄우는 메서드(requestPermissions()) 추가.(마시멜로 이상 버전 기기에서 확인필요)
+ -위험 권한 부여를 요청하는 대화상자를 띄우는 메서드(requestPermissions()) 추가.(마시멜로 이상 버전 기기에서 확인필요 - 정상 작동 확인)
 -학번 설정 변경 기능 추가
  -changeStudentNumButton : 대화상자를 띄워서 사용자가 changeStudentNum()을 임의로 사용할 수 있게 함.
   -changeStudentNum() : totalLayout과 studentNumLayout의 visibility를 뒤바꾸고, clearAll() 실행.
    -clearAll() : DataManager에서와 같이 모든 Type, LectureField, LectureGroup, LectureWorld, Lecture, FreeLecture 객체들을 초기화.
     -사용자가 새로운 studentNum을 입력한 뒤 studentNumSaveButton을 눌렀을 때 studentNumSave()를 통해 initialization()이 실행되면 기존의 데이터(각 객체들의 상하관계)가 중복되는 것을 방지하기 위함.
+
+---[버전 4.0]---
+-외국어진행강좌 수강 여부 체크 기능 추가
+ -사용자 조작을 위한 forLecLayout 추가.
+  -사용자가 전공/교양 여부 선택 및 과목명 입력 후 추가 가능.
+  -추가 된 과목은 전공/교양 여부, 과목명, 삭제 버튼을 포함한 레이아웃(forLectureLayout)으로 ListView로 정렬.
+ -데이터 관리를 위한 ForLecAdapter 추가.
+  -데이터는 사용자가 forLecLayout에서 추가한 ForLecture 객체.
+  -ForLecture 클래스가 Serializable을 implements하게 하여 ForLecAdapter의 ArrayList<ForLecture> 객체를 파일 입출력으로 저장/복원.
+
+-복수/부전공 이수 학점 변경 반영
+ -totalLayout에 Dialog를 띄우는 Button을 추가하여 Dialog 상에서 1.단일전공 이수, 2.다른 전공 병행이수(에자공이 타학과 복수/부전공), 3.타과생 복수전공(타과생이 에자공 복수전공), 4.타과생 부전공(타과생이 에자공 부전공) 중 택하도록.
+ -전공과정을 변경하면 이전 데이터는 사라짐.
+  -경고 문구로 안내.
+ -전공과정 중 3., 4.는 Culture와 Normal을 필요로 하지 않으므로 null로 두었는데, 이에 따라 apply()가 전공과정을 구분하여 작동될 수 있도록 (String)progressingMajor를 추가함.
+  -progressingMajor 역시 파일 입출력을 통해 저장/복원.
+ -15학번 이전의 경우 전공과정 3.(에자공 부전공)에서 전공 21학점의 구성이 어떻게 되는지 알 수 없어서 하위 항목에 FreeLecture 객체를 추가하여 처리.
+  -업데이트 공지사항을 통해 사용자들에게 정보 제공 요청.
+
+-(16학번 이후) 생명존중(자살예방) 교육 이수 여부 체크 기능 추가
+ -(CheckBox) lifeRespectCheckBox로 처리.
+  -기존 데이터가 있는 경우 데이터 복원 시, 데이터가 없는 경우 학번 입력 후 저장 시 학번을 확인하여 16학번 이후인 경우에만 VISIBLE이 되도록 처리.
+
+-도움말 추가
+ -마이스누 또는 학과사무실에서 정확한 졸업 요건을 확인할 것을 권장하는 메시지
+  -AlertDialog로 처리
+
+---[버전 4.1]---
+-복수/부전공 변경 시 '그 외 학점'의 이수 기준 학점이 변경되지 않음
+ -변경되도록 조정.
+
+-앱을 종료했다가 다시 켰을 때 생명존중(자살예방)교육 이수 여부 체크가 유지되지 않음
+ -유지되도록 조정

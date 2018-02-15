@@ -12,6 +12,12 @@ public class DataManager {
     final public static boolean OFF = false;
     final public static boolean ON = true;
 
+    //전공과정 변경 처리를 위한 상수
+    final public static String EREOnly = "1.단일전공 이수(에자공만 전공)";
+    final public static String EREnOther = "2.다른 전공 병행이수(에자공이 타학과 복수/부전공)";
+    final public static String OthernERE = "3.타과생 복수전공(타과생이 에자공 복수전공)";
+    final public static String OthernSubERE = "4.타과생 부전공(타과생이 에자공 부전공)";
+
 
     //Type
     final public static int TYPE = 0;
@@ -29,6 +35,7 @@ public class DataManager {
     static LectureField major_necessary = new LectureField("전공필수", 19);
     static LectureField major_optNec = new LectureField("전공선택필수", 9);
     static LectureField major_optional = new LectureField("전공선택", 40);
+    static LectureField major_optOrNec = new LectureField("전공선택, 전공선택필수", 3);   // 15학번 이전 복수/부전공을 위한 항목
     static LectureField major_other = new LectureField("공대 타학과개론", 3);
 
     //LectureGroup
@@ -112,6 +119,8 @@ public class DataManager {
     static FreeLecture optFree = new FreeLecture(major_optional, 0);
     static FreeLecture othFree = new FreeLecture(major_other, 0);
     static FreeLecture norFree = new FreeLecture(normal, 0);
+    static FreeLecture majorFree = new FreeLecture(major, 0);
+    static FreeLecture majorOptOrNecFree = new FreeLecture(major_optOrNec, 0);
 
     //AddedLecture
     final public static int ADDED_LECTURE = 6;
