@@ -10,10 +10,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +26,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
+import agi.erecreditsmanager.ForLecture.ForLecture;
 import agi.erecreditsmanager.FreeLecture.FreeLecture;
 import agi.erecreditsmanager.Lecture.Lecture;
 import agi.erecreditsmanager.LectureField.LectureField;
@@ -30,6 +36,10 @@ import agi.erecreditsmanager.LectureGroup.LectureGroup;
 import agi.erecreditsmanager.LectureWorld.LectureWorld;
 import agi.erecreditsmanager.Type.Type;
 
+import static agi.erecreditsmanager.DataManager.EREOnly;
+import static agi.erecreditsmanager.DataManager.EREnOther;
+import static agi.erecreditsmanager.DataManager.OthernERE;
+import static agi.erecreditsmanager.DataManager.OthernSubERE;
 import static agi.erecreditsmanager.DataManager.advEarChe;
 import static agi.erecreditsmanager.DataManager.advResGeo;
 import static agi.erecreditsmanager.DataManager.bioExp;
@@ -78,8 +88,11 @@ import static agi.erecreditsmanager.DataManager.lenLitFree;
 import static agi.erecreditsmanager.DataManager.litArt;
 import static agi.erecreditsmanager.DataManager.litArtFree;
 import static agi.erecreditsmanager.DataManager.major;
+import static agi.erecreditsmanager.DataManager.majorFree;
+import static agi.erecreditsmanager.DataManager.majorOptOrNecFree;
 import static agi.erecreditsmanager.DataManager.major_necessary;
 import static agi.erecreditsmanager.DataManager.major_optNec;
+import static agi.erecreditsmanager.DataManager.major_optOrNec;
 import static agi.erecreditsmanager.DataManager.major_optional;
 import static agi.erecreditsmanager.DataManager.major_other;
 import static agi.erecreditsmanager.DataManager.math1;
@@ -114,13 +127,13 @@ import static agi.erecreditsmanager.DataManager.thiExp;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView listView;
-    TextView totalCreditsTextView, studentNumTextView;
-    LinearLayout studentNumLayout;
+    ListView listView, forLecListView;
+    TextView totalCreditsTextView, studentNumTextView, forLecTextView;
+    LinearLayout studentNumLayout, forLecLayout;
     RelativeLayout totalLayout;
-    EditText studentNumEditText;
+    EditText studentNumEditText, forLecSpinnerEditText;
 
-    String sdcardPath, filename;
+    String sdcardPath, filename, forLectureType, progressingMajor;
 
     Total total;
 
@@ -128,6 +141,15 @@ public class MainActivity extends AppCompatActivity {
     int totalCredits;
 
     int studentNum;
+
+    Spinner forLecSpinner;
+    String[] types = {"전공", "교양"};
+    ForLecAdapter forLecAdapter;
+
+    ArrayList<ForLecture> forLectures;
+
+    CheckBox lifeRespectCheckBox;
+    boolean isLifeChecked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +162,29 @@ public class MainActivity extends AppCompatActivity {
         studentNumLayout = (LinearLayout) findViewById(R.id.studentNumLayout);
         studentNumEditText = (EditText) findViewById(R.id.studentNumEditText);
         totalLayout = (RelativeLayout) findViewById(R.id.totalLayout);
+        forLecLayout = (LinearLayout) findViewById(R.id.forLecLayout);
+        forLecTextView = (TextView) findViewById(R.id.forLecTextView);
+        forLecListView = (ListView) findViewById(R.id.forLecListView);
+        forLecLayout.setVisibility(View.INVISIBLE);
+        forLecSpinner = (Spinner) findViewById(R.id.forLecSpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        forLecSpinner.setAdapter(adapter);
+        forLecSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                forLectureType = types[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        forLecSpinnerEditText = (EditText) findViewById(R.id.forLecSpinnerEditText);
+        forLecAdapter = new ForLecAdapter(this);
+        forLecListView.setAdapter(forLecAdapter);
+        lifeRespectCheckBox = (CheckBox) findViewById(R.id.lifeRespectCheckBox);
 
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED)
@@ -153,11 +198,18 @@ public class MainActivity extends AppCompatActivity {
         File file = new File(filename);
 
         total = new Total(-1);
+        forLectures = new ArrayList<ForLecture>();
+        progressingMajor = EREOnly;
+        isLifeChecked = false;
+
         try {
             FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
             total = (Total) objectInputStream.readObject();
+            forLectures = (ArrayList<ForLecture>) objectInputStream.readObject();
+            progressingMajor = (String) objectInputStream.readObject();
+            isLifeChecked = (boolean) objectInputStream.readObject();
 
             objectInputStream.close();
             Toast.makeText(this, "불러오기 성공", Toast.LENGTH_LONG).show();
@@ -173,7 +225,17 @@ public class MainActivity extends AppCompatActivity {
             studentNumLayout.setVisibility(View.INVISIBLE);
             studentNumTextView.setText(total.getStudentNum() + "학번");
             setting();
+
+            if(total.getStudentNum() >= 16) {
+                lifeRespectCheckBox.setVisibility(View.VISIBLE);
+                lifeRespectCheckBox.setChecked(isLifeChecked);
+            } else {
+                lifeRespectCheckBox.setVisibility(View.INVISIBLE);
+            }
         }
+
+        forLecAdapter.setForLectures(forLectures);
+        forLecListView.setAdapter(forLecAdapter);
     }
 
     public void initialization(int studentNum) {
@@ -441,11 +503,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void apply() {
-        total.getCulture().sumCredits();
-        total.getMajor().sumCredits();
-        total.getNormal().sumCredits();
 
-        totalCredits = total.getCulture().getCredits() + total.getMajor().getCredits() + total.getNormal().getCredits();
+        switch(progressingMajor) {
+            case EREOnly:
+            case EREnOther:
+                total.getCulture().sumCredits();
+                total.getMajor().sumCredits();
+                total.getNormal().sumCredits();
+                totalCredits = total.getCulture().getCredits() + total.getMajor().getCredits() + total.getNormal().getCredits();
+                break;
+
+            case OthernERE:
+            case OthernSubERE:
+                total.getMajor().sumCredits();
+                totalCredits = total.getMajor().getCredits();
+                break;
+        }
+
         totalCreditsTextView.setText("전체 학점 : " + totalCredits + "/130");
     }
     public void applyClicked(View view) {
@@ -459,6 +533,10 @@ public class MainActivity extends AppCompatActivity {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(total);
+            objectOutputStream.writeObject(forLectures);
+            objectOutputStream.writeObject(progressingMajor);
+            isLifeChecked = lifeRespectCheckBox.isChecked();
+            objectOutputStream.writeObject(isLifeChecked);
 
             objectOutputStream.flush();
             objectOutputStream.close();
@@ -489,6 +567,13 @@ public class MainActivity extends AppCompatActivity {
             total.setStudentNum(studentNum);
             studentNumTextView.setText(studentNum + "학번");
             setting();
+
+            if(total.getStudentNum() >= 16) {
+                lifeRespectCheckBox.setVisibility(View.VISIBLE);
+            } else {
+                lifeRespectCheckBox.setVisibility(View.INVISIBLE);
+            }
+
         } catch (NumberFormatException e) {
             e.printStackTrace();
             Toast.makeText(this, "학번은 숫자 2자리로 입력해주세요.", Toast.LENGTH_LONG).show();
@@ -503,9 +588,18 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new MainAdapter(this);
 
-        adapter.setCreditManager(total.getCulture());
-        adapter.setCreditManager(total.getMajor());
-        adapter.setCreditManager(total.getNormal());
+        switch(progressingMajor) {
+            case EREOnly:
+            case EREnOther:
+                adapter.setCreditManager(total.getCulture());
+                adapter.setCreditManager(total.getMajor());
+                adapter.setCreditManager(total.getNormal());
+                break;
+
+            case OthernERE:
+            case OthernSubERE:
+                adapter.setCreditManager(total.getMajor());
+        }
 
         listView.setAdapter(adapter);
     }
@@ -631,5 +725,163 @@ public class MainActivity extends AppCompatActivity {
         optFree = new FreeLecture(major_optional, 0);
         othFree = new FreeLecture(major_other, 0);
         norFree = new FreeLecture(normal, 0);
+    }
+
+    public void openForLecLayout(View v) {
+        totalLayout.setVisibility(View.INVISIBLE);
+        forLecLayout.setVisibility(View.VISIBLE);
+    }
+    public void closeForLecLayout(View v) {
+        forLecLayout.setVisibility(View.INVISIBLE);
+        totalLayout.setVisibility(View.VISIBLE);
+    }
+
+    public void addForLecture(View v) {
+        String forLectureName = forLecSpinnerEditText.getText().toString();
+        if((forLectureType != null) && (forLectureName != null)) {
+            ForLecture forLecture = new ForLecture(forLectureType, forLectureName);
+            forLecAdapter.setForLecture(forLecture);
+        } else {
+            Toast.makeText(this, "과목의 종류와 과목명을 설정해주세요.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onMultiMajorButtonClicked(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("전공과정 변경 안내");
+        builder.setMessage("전공과정 변경 시 과목들을 체크 및 추가해 놓은 데이터가 사라집니다. 변경 후 다시 설정해 주세요.");
+
+        final MultiMajorDialogLayout multiMajorDialogLayout = new MultiMajorDialogLayout(this);
+        builder.setView(multiMajorDialogLayout);
+
+        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String selectedMajor = multiMajorDialogLayout.checkSelectedMajor();
+                Toast.makeText(getApplicationContext(), selectedMajor + "을(를) 선택하셨습니다.", Toast.LENGTH_LONG).show();
+                progressingMajor = selectedMajor;
+                changeMajorProcess(selectedMajor);
+            }
+        });
+
+
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog multiMajorDialog = builder.create();
+        multiMajorDialog.show();
+    }
+
+    public void changeMajorProcess(String selectedMajor) {
+        clearAll();
+        initialization(studentNum);
+
+        if(studentNum <= 15) {  //15학번 이전
+            switch(selectedMajor) {
+                case EREOnly: break;
+
+                case EREnOther:
+                    major = new Type("전공", 42);
+                    major.addUnderManager(major_necessary);
+                    major_optOrNec.addUnderManager(majorOptOrNecFree);
+                    major.addUnderManager(major_optOrNec);
+                    major.addUnderManager(major_optNec);
+                    major.addUnderManager(major_other);
+                    if(studentNum <= 13) {  //13학번 이전
+                        normal.setMinCredits(41);
+                    } else if(studentNum <= 15) {   //14, 15학번
+                        normal.setMinCredits(48);
+                    }
+                    break;
+
+                case OthernERE:
+                    total = new Total(studentNum);
+                    major = new Type("전공", 39);
+                    major.addUnderManager(major_necessary);
+                    major_optOrNec.addUnderManager(majorOptOrNecFree);
+                    major.addUnderManager(major_optOrNec);
+                    major.addUnderManager(major_optNec);
+                    culture = null;
+                    normal = null;
+                    break;
+
+                case OthernSubERE:
+                    total = new Total(studentNum);
+                    major = new Type("전공", 21);
+                    major.addUnderManager(majorFree);
+                    culture = null;
+                    normal = null;
+                    break;
+
+                default:
+            }
+
+        } else if (studentNum >= 16) {   //16학번 이후
+            switch(selectedMajor) {
+                case EREOnly: break;
+
+                case EREnOther:
+                    major = new Type("전공", 42);
+                    major.addUnderManager(major_necessary);
+                    major_optional.setMinCredits(20);
+                    major.addUnderManager(major_optional);
+                    major.addUnderManager(major_other);
+                    normal.setMinCredits(48);
+                    break;
+
+                case OthernERE:
+                    total = new Total(studentNum);
+                    major = new Type("전공", 39);
+                    major.addUnderManager(major_necessary);
+                    major_optional.setMinCredits(20);
+                    major.addUnderManager(major_optional);
+                    culture = null;
+                    normal = null;
+                    break;
+
+                case OthernSubERE:
+                    total = new Total(studentNum);
+                    major = new Type("전공", 21);
+                    major_necessary = new LectureField("전공필수", 15);
+                    major_necessary.addUnderManager(eneEcoTecAdm);
+                    major_necessary.addUnderManager(earPhyEng);
+                    major_necessary.addUnderManager(resProEng);
+                    major_necessary.addUnderManager(stoDynExp);
+                    major_necessary.addUnderManager(oilGasEngExp);
+                    major.addUnderManager(major_necessary);
+                    major_optional.setMinCredits(6);
+                    major.addUnderManager(major_optional);
+                    culture = null;
+                    normal = null;
+                    break;
+
+                default:
+            }
+        }
+
+        total.setCulture(culture);
+        total.setMajor(major);
+        total.setNormal(normal);
+        setting();
+    }
+
+    public void onAdviceButtonClicked(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("도움말");
+        builder.setMessage("본 앱은 에자공 학부생 개인이 만든 것으로 각 항목들은 정확하지 않을 수 있습니다. 마이스누 > 학사정보 > 졸업 > 졸업사정(자가진단)처리 전공내역에서 '이수규정 및 내규조회' 및 졸업시뮬레이션 또는 학과사무실에 문의를 통해 정확한 졸업 요건을 확인하시기 바랍니다.\n학과사무실 : 02-880-7219");
+
+        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog adviceDialog = builder.create();
+        adviceDialog.show();
     }
 }
