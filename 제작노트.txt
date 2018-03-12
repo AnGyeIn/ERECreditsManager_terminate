@@ -269,4 +269,10 @@ Class 위계구조
   -changeStudentNumButton의 text를 "--학번"으로 표시(기존 text는 "학번 수정")
  -multiMajorButton의 text를 설정된 전공과정 내용으로 변경(기존 text는 "전공과정 변경(복수/부전공)")
 
-
+-오류 개선
+ -전공과정으로 "타학과 주전공, 에자공 복수전공", "타학과 주전공, 에자공 부전공" 선택 시 전체 학점 기준이 변경되지 않는 이슈
+  -전체 학점 기준을 (int) minTotalCredits에 저장
+  -minTotalCredits 값은 setting() 실행 시 progrssingMajor에 따라 설정
+  -totalCreditsTextView에 minTotalCredits 값을 표시
+ -전공과정 변경 상태에서 학번을 변경하면 표시 항목 학점 기준이 변경되지 않는 이슈
+  -studentNumSave()에서 initialization() 및 Total 객체에 major, culture, normal을 설정하던 부분을 changeMajorProcess()로 대체(같은 과정이 changeMajorProcess() 내에서 전공과정 체크 후 실행 됨)

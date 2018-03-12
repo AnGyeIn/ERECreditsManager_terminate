@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
     Total total;
 
     MainAdapter adapter;
-    int totalCredits;
+    int totalCredits, minTotalCredits;
 
     int studentNum;
 
@@ -523,7 +523,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        totalCreditsTextView.setText("전체 학점 : " + totalCredits + "/130");
+        totalCreditsTextView.setText("전체 학점 : " + totalCredits + "/" + minTotalCredits);
     }
     public void applyClicked(View view) {
         apply();
@@ -563,13 +563,9 @@ public class MainActivity extends AppCompatActivity {
             studentNum = Integer.parseInt(studentNumEditText.getText().toString());
             studentNumLayout.setVisibility(View.INVISIBLE);
             totalLayout.setVisibility(View.VISIBLE);
-            initialization(studentNum);
-            total.setCulture(culture);
-            total.setMajor(major);
-            total.setNormal(normal);
+            changeMajorProcess(progressingMajor);
             total.setStudentNum(studentNum);
             changeStudentNumButton.setText(studentNum + "학번");
-            setting();
 
             if(total.getStudentNum() >= 16) {
                 lifeRespectCheckBox.setVisibility(View.VISIBLE);
@@ -587,8 +583,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setting() {
-        apply();
-
         adapter = new MainAdapter(this);
 
         switch(progressingMajor) {
@@ -597,13 +591,21 @@ public class MainActivity extends AppCompatActivity {
                 adapter.setCreditManager(total.getCulture());
                 adapter.setCreditManager(total.getMajor());
                 adapter.setCreditManager(total.getNormal());
+                minTotalCredits = 130;
                 break;
 
             case OthernERE:
+                adapter.setCreditManager(total.getMajor());
+                minTotalCredits = 39;
+                break;
+
             case OthernSubERE:
                 adapter.setCreditManager(total.getMajor());
+                minTotalCredits = 21;
+                break;
         }
 
+        apply();
         listView.setAdapter(adapter);
     }
 
@@ -762,6 +764,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String selectedMajor = multiMajorDialogLayout.checkSelectedMajor();
                 Toast.makeText(getApplicationContext(), selectedMajor + "을(를) 선택하셨습니다.", Toast.LENGTH_LONG).show();
+                multiMajorButton.setText(selectedMajor);
                 progressingMajor = selectedMajor;
                 changeMajorProcess(selectedMajor);
             }

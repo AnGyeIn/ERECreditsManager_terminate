@@ -13,25 +13,25 @@
             android:id="@+id/EREOnlyButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1.단일전공 이수(에자공만 전공)" />
+            android:text="에자공 주전공" />
 
         <RadioButton
             android:id="@+id/EREnOtherButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2.다른 전공 병행이수(에자공이 타학과 복수/부전공)" />
+            android:text="에자공 주전공, 타학과 복수/부전공" />
 
         <RadioButton
             android:id="@+id/OthernEREButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="3.타과생 복수전공(타과생이 에자공 복수전공)" />
+            android:text="타학과 주전공, 에자공 복수전공" />
 
         <RadioButton
             android:id="@+id/OthernSubEREButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="4.타과생 부전공(타과생이 에자공 부전공)" />
+            android:text="타학과 주전공, 에자공 부전공" />
     </RadioGroup>
 
 </LinearLayout>
