@@ -13,25 +13,25 @@
             android:id="@+id/EREOnlyButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="에자공 주전공" />
+            android:text="에자공 주전공"/>
 
         <RadioButton
             android:id="@+id/EREnOtherButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="에자공 주전공, 타학과 복수/부전공" />
+            android:text="에자공 주전공, 타학과 복수/부전공"/>
 
         <RadioButton
             android:id="@+id/OthernEREButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="타학과 주전공, 에자공 복수전공" />
+            android:text="타학과 주전공, 에자공 복수전공"/>
 
         <RadioButton
             android:id="@+id/OthernSubEREButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="타학과 주전공, 에자공 부전공" />
+            android:text="타학과 주전공, 에자공 부전공"/>
     </RadioGroup>
 
 </LinearLayout>

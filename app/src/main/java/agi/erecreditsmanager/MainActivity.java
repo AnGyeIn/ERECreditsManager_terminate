@@ -1,8 +1,10 @@
 package agi.erecreditsmanager;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -10,8 +12,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -19,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -170,9 +173,69 @@ public class MainActivity extends AppCompatActivity {
         forLecListView = (ListView) findViewById(R.id.forLecListView);
         forLecLayout.setVisibility(View.INVISIBLE);
         forLecSpinner = (Spinner) findViewById(R.id.forLecSpinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, types);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        forLecSpinner.setAdapter(adapter);
+        SpinnerAdapter spinnerAdapter = new SpinnerAdapter() {
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                ERETMSpinnerDropdownItemLayout dropdownItemView = new ERETMSpinnerDropdownItemLayout(getApplicationContext());
+                dropdownItemView.setDropdownItemTextView(types[position]);
+
+                return dropdownItemView;
+            }
+
+            @Override
+            public void registerDataSetObserver(DataSetObserver observer) {
+
+            }
+
+            @Override
+            public void unregisterDataSetObserver(DataSetObserver observer) {
+
+            }
+
+            @Override
+            public int getCount() {
+                return types.length;
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return types[position];
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return 0;
+            }
+
+            @Override
+            public boolean hasStableIds() {
+                return false;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                ERETMSpinnerDropdownItemLayout view = new ERETMSpinnerDropdownItemLayout(getApplicationContext());
+                view.setDropdownItemTextView(types[position]);
+
+                return view;
+            }
+
+            @Override
+            public int getItemViewType(int position) {
+                return 1;
+            }
+
+            @Override
+            public int getViewTypeCount() {
+                return 1;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+        };
+        forLecSpinner.setAdapter(spinnerAdapter);
         forLecSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -215,10 +278,10 @@ public class MainActivity extends AppCompatActivity {
             isLifeChecked = (boolean) objectInputStream.readObject();
 
             objectInputStream.close();
-            Toast.makeText(this, "불러오기 성공", Toast.LENGTH_LONG).show();
+            ERETMToast(this, "불러오기 성공", Toast.LENGTH_LONG);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "불러오기 실패.", Toast.LENGTH_LONG).show();
+            ERETMToast(this, "불러오기 실패", Toast.LENGTH_LONG);
         }
 
         if(total.getStudentNum() == -1) {
@@ -543,10 +606,10 @@ public class MainActivity extends AppCompatActivity {
 
             objectOutputStream.flush();
             objectOutputStream.close();
-            Toast.makeText(this, "저장되었습니다.", Toast.LENGTH_LONG).show();
+            ERETMToast(this, "저장되었습니다.", Toast.LENGTH_LONG);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "저장 실패", Toast.LENGTH_LONG).show();
+            ERETMToast(this, "저장 실패", Toast.LENGTH_LONG);
         }
     }
     public void saveClicked(View view) {
@@ -575,7 +638,7 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            Toast.makeText(this, "학번은 숫자 2자리로 입력해주세요.", Toast.LENGTH_LONG).show();
+            ERETMToast(this, "학번은 숫자 2자리로 입력해주세요.", Toast.LENGTH_LONG);
         }
     }
     public void studentNumSaveClicked(View view) {
@@ -747,7 +810,7 @@ public class MainActivity extends AppCompatActivity {
             ForLecture forLecture = new ForLecture(forLectureType, forLectureName);
             forLecAdapter.setForLecture(forLecture);
         } else {
-            Toast.makeText(this, "과목의 종류와 과목명을 설정해주세요.", Toast.LENGTH_LONG).show();
+            ERETMToast(this, "과목의 종류와 과목명을 설정해주세요.", Toast.LENGTH_LONG);
         }
     }
 
@@ -763,7 +826,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String selectedMajor = multiMajorDialogLayout.checkSelectedMajor();
-                Toast.makeText(getApplicationContext(), selectedMajor + "을(를) 선택하셨습니다.", Toast.LENGTH_LONG).show();
+                ERETMToast(getApplicationContext(), selectedMajor + "을 선택하셨습니다.", Toast.LENGTH_LONG);
                 multiMajorButton.setText(selectedMajor);
                 progressingMajor = selectedMajor;
                 changeMajorProcess(selectedMajor);
@@ -889,5 +952,15 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog adviceDialog = builder.create();
         adviceDialog.show();
+    }
+
+    static public void ERETMToast(Context context, String text, int duration) {
+        ERETMToastLayout layout = new ERETMToastLayout(context);
+        layout.setToastTextView(text);
+        Toast toast = new Toast(context);
+        toast.setDuration(duration);
+
+        toast.setView(layout);
+        toast.show();
     }
 }

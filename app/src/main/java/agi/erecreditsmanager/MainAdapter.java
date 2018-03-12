@@ -35,6 +35,7 @@ import static agi.erecreditsmanager.DataManager.LECTURE_WORLD;
 import static agi.erecreditsmanager.DataManager.OFF;
 import static agi.erecreditsmanager.DataManager.ON;
 import static agi.erecreditsmanager.DataManager.TYPE;
+import static agi.erecreditsmanager.MainActivity.ERETMToast;
 
 public class MainAdapter extends BaseAdapter {
 
@@ -260,10 +261,10 @@ public class MainAdapter extends BaseAdapter {
                     layout.setInitiation();
                     creditManagers.add(j, addedLecture);
                     notifyDataSetChanged();
-                    Toast.makeText(context, "과목이 추가되었습니다.", Toast.LENGTH_LONG).show();
+                    ERETMToast(context, "과목이 추가되었습니다.", Toast.LENGTH_LONG);
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
-                    Toast.makeText(context, "학점은 반드시 숫자로 입력해주세요.", Toast.LENGTH_LONG).show();
+                    ERETMToast(context, "학점은 반드시 숫자로 입력해주세요.", Toast.LENGTH_LONG);
                 }
             }
         });
@@ -307,10 +308,10 @@ public class MainAdapter extends BaseAdapter {
                     addedLecture.removeThis();
                     removeCreditManager(j);
                     notifyDataSetChanged();
-                    Toast.makeText(context, "과목이 삭제되었습니다.", Toast.LENGTH_LONG).show();
+                    ERETMToast(context, "과목이 삭제되었습니다.", Toast.LENGTH_LONG);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(context, "과목 삭제 실패", Toast.LENGTH_LONG).show();
+                    ERETMToast(context, "과목 삭제 실패", Toast.LENGTH_LONG);
                 }
             }
         });

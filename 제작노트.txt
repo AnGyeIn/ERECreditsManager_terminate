@@ -276,3 +276,14 @@ Class 위계구조
   -totalCreditsTextView에 minTotalCredits 값을 표시
  -전공과정 변경 상태에서 학번을 변경하면 표시 항목 학점 기준이 변경되지 않는 이슈
   -studentNumSave()에서 initialization() 및 Total 객체에 major, culture, normal을 설정하던 부분을 changeMajorProcess()로 대체(같은 과정이 changeMajorProcess() 내에서 전공과정 체크 후 실행 됨)
+
+-디자인 테마 변경
+ -글자색은 노란색, 힌트 글자색은 반투명한 노란색, Button 배경색은 검은색, Layout 배경색은 진한 회색으로 설정(에자공 로고 테마)
+  -forLecSpinner의 글자색 및 배경색을 변환하기 위해 SpinnerAdapter를 재정의
+   -Spinner 및 그 item들의 view를 커스텀하기 위해 ERETMSpinnerDropdownItemLayout 클래스와 eretm_spinner_dropdown_item 리소스 생성
+ -토스트 메시지에 커스텀 디자인 적용
+  -view를 커스텀하기 위해 ERETMToastLayout 클래스와 eretm_toastborder 리소스 생성
+  -커스텀 토스트 메시지를 만드는 ERETMTaost() 정의
+   -MainAdapter, ForLecAdapter에서도 사용할 수 있도록 static으로 정의
+ -styles.xml 파일에 조건을 추가하여 액션바 제거
+ -(한계)AlertDialog를 완전히 커스텀하지 못해서 도움말 창과 전공과정 변경 창의 디자인은 바꾸지 않음

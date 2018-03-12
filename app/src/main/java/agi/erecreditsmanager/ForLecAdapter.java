@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import agi.erecreditsmanager.ForLecture.ForLecture;
 import agi.erecreditsmanager.ForLecture.ForLectureLayout;
 
+import static agi.erecreditsmanager.MainActivity.ERETMToast;
+
 public class ForLecAdapter extends BaseAdapter {
 
     ArrayList<ForLecture> forLectures = new ArrayList<ForLecture>();
@@ -37,7 +39,7 @@ public class ForLecAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
         ForLectureLayout layout = new ForLectureLayout(context);
         ForLecture forLecture = forLectures.get(position);
 
@@ -50,10 +52,10 @@ public class ForLecAdapter extends BaseAdapter {
                 try {
                     forLectures.remove(position);
                     notifyDataSetChanged();
-                    Toast.makeText(context, "외국어진행강좌가 삭제되었습니다.", Toast.LENGTH_LONG).show();
+                    ERETMToast(context, "외국어진행강좌가 삭제되었습니다.", Toast.LENGTH_LONG);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(context, "외국어진행강좌 삭제 실패", Toast.LENGTH_LONG).show();
+                    ERETMToast(context, "외국어진행강좌 삭제 실패", Toast.LENGTH_LONG);
                 }
             }
         });

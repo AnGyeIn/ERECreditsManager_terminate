@@ -9,7 +9,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="agi.erecreditsmanager.MainActivity">
+    tools:context="agi.erecreditsmanager.MainActivity"
+    android:background="#2F2F2F">
 
     <RelativeLayout
         android:id="@+id/totalLayout"
@@ -24,19 +25,25 @@
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:layout_margin="3dp"
+            android:background="#080404"
             android:onClick="changeStudentNumClicked"
             android:padding="0dp"
-            android:text="학번" />
+            android:text="학번"
+            android:textColor="#E4B92A" />
 
         <Button
             android:id="@+id/multiMajorButton"
             android:layout_width="220dp"
             android:layout_height="30dp"
-            android:layout_alignTop="@+id/changeStudentNumButton"
+            android:layout_alignParentTop="true"
+            android:layout_margin="3dp"
             android:layout_toRightOf="@+id/changeStudentNumButton"
+            android:background="#080404"
             android:onClick="onMultiMajorButtonClicked"
             android:padding="0dp"
-            android:text="에자공 주전공" />
+            android:text="에자공 주전공"
+            android:textColor="#E4B92A" />
 
         <TextView
             android:id="@+id/totalCreditsTextView"
@@ -45,68 +52,82 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/changeStudentNumButton"
-            android:text="전체 학점 : 0/130" />
+            android:text="전체 학점 : 0/130"
+            android:textColor="#E4B92A" />
 
         <Button
             android:id="@+id/applyButton"
             android:layout_width="60dp"
             android:layout_height="30dp"
             android:layout_alignTop="@+id/totalCreditsTextView"
+            android:layout_margin="3dp"
             android:layout_toRightOf="@+id/totalCreditsTextView"
+            android:background="#080404"
             android:onClick="applyClicked"
             android:padding="0dp"
-            android:text="반영" />
+            android:text="반영"
+            android:textColor="#E4B92A" />
 
         <Button
             android:id="@+id/saveButton"
             android:layout_width="60dp"
             android:layout_height="30dp"
             android:layout_alignTop="@+id/totalCreditsTextView"
+            android:layout_margin="3dp"
             android:layout_toRightOf="@+id/applyButton"
+            android:background="#080404"
             android:onClick="saveClicked"
             android:padding="0dp"
-            android:text="저장" />
+            android:text="저장"
+            android:textColor="#E4B92A" />
 
         <Button
             android:id="@+id/closeButton"
             android:layout_width="60dp"
             android:layout_height="30dp"
             android:layout_alignTop="@+id/totalCreditsTextView"
+            android:layout_margin="3dp"
             android:layout_toRightOf="@+id/saveButton"
+            android:background="#080404"
             android:onClick="closeClicked"
             android:padding="0dp"
-            android:text="닫기" />
+            android:text="닫기"
+            android:textColor="#E4B92A" />
 
         <Button
             android:id="@+id/forLecOpenButton"
-            android:layout_width="wrap_content"
+            android:layout_width="170dp"
             android:layout_height="40dp"
             android:layout_below="@id/applyButton"
+            android:layout_margin="3dp"
+            android:background="#080404"
             android:onClick="openForLecLayout"
-            android:text="외국어진행강좌 수강 체크" />
+            android:text="외국어진행강좌 수강 체크"
+            android:textColor="#E4B92A" />
 
         <CheckBox
             android:id="@+id/lifeRespectCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/forLecOpenButton"
-            android:text="생명존중(자살예방)교육 이수 (16학번 이후 필수)" />
+            android:text="생명존중(자살예방)교육 이수 (16학번 이후 필수)"
+            android:textColor="#E4B92A" />
 
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/adviceButton"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/lifeRespectCheckBox"
-            android:layout_above="@+id/adviceButton">
-        </ListView>
+            android:layout_below="@+id/lifeRespectCheckBox"></ListView>
 
         <ImageButton
             android:id="@+id/adviceButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentBottom="true"
+            android:background="#2F2F2F"
             android:onClick="onAdviceButtonClicked"
             app:srcCompat="@android:drawable/ic_menu_info_details" />
 
@@ -124,7 +145,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="학번 입력 : " />
+            android:text="학번 입력 : "
+            android:textColor="#E4B92A" />
 
         <EditText
             android:id="@+id/studentNumEditText"
@@ -134,6 +156,8 @@
             android:ems="10"
             android:hint="ex) 16학번이면 '16'입력"
             android:inputType="textPersonName"
+            android:textColor="#E4B92A"
+            android:textColorHint="#88E4B92A"
             android:textSize="14sp" />
 
         <Button
@@ -141,9 +165,11 @@
             android:layout_width="60dp"
             android:layout_height="30dp"
             android:layout_weight="1"
+            android:background="#080404"
             android:onClick="studentNumSaveClicked"
             android:padding="0dp"
-            android:text="확인" />
+            android:text="확인"
+            android:textColor="#E4B92A" />
     </LinearLayout>
 
     <LinearLayout
@@ -157,7 +183,8 @@
             android:id="@+id/forLecTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1과목 이상의 전공을 포함해 3과목 이상 외국어진행강좌(대학영어 제외) 수강" />
+            android:text="1과목 이상의 전공을 포함해 3과목 이상 외국어진행강좌(대학영어 제외) 수강"
+            android:textColor="#E4B92A" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -176,14 +203,18 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="과목명을 입력하세요."
+                android:textColor="#E4B92A"
+                android:textColorHint="#88E4B92A"
                 android:textSize="16dp" />
 
             <Button
                 android:id="@+id/forLecAddButton"
                 android:layout_width="60dp"
                 android:layout_height="40dp"
+                android:background="#080404"
                 android:onClick="addForLecture"
                 android:text="추가"
+                android:textColor="#E4B92A"
                 android:textSize="16dp" />
         </LinearLayout>
 
@@ -197,9 +228,11 @@
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_gravity="bottom|center_horizontal"
+            android:background="#080404"
             android:onClick="closeForLecLayout"
             android:padding="0dp"
-            android:text="닫기" />
+            android:text="닫기"
+            android:textColor="#E4B92A" />
     </LinearLayout>
 
 </RelativeLayout>
