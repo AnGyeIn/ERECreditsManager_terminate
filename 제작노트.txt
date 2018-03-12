@@ -287,3 +287,4 @@ Class 위계구조
    -MainAdapter, ForLecAdapter에서도 사용할 수 있도록 static으로 정의
  -styles.xml 파일에 조건을 추가하여 액션바 제거
  -(한계)AlertDialog를 완전히 커스텀하지 못해서 도움말 창과 전공과정 변경 창의 디자인은 바꾸지 않음
+ -(한계)CheckBox, RadioButton의 색상도 바꾸지 못 함
