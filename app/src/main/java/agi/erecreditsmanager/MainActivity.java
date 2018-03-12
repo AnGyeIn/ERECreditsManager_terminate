@@ -290,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             studentNumLayout.setVisibility(View.INVISIBLE);
             changeStudentNumButton.setText(total.getStudentNum() + "학번");
+            multiMajorButton.setText(progressingMajor);
             setting();
 
             if(total.getStudentNum() >= 16) {
