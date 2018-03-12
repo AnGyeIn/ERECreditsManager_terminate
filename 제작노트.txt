@@ -262,3 +262,11 @@ Class 위계구조
 
 -앱을 종료했다가 다시 켰을 때 생명존중(자살예방)교육 이수 여부 체크가 유지되지 않음
  -유지되도록 조정
+
+---[버전 5.0]---
+-디자인 효율성 개선
+ -학번을 표시하던 studentNumTextView 삭제
+  -changeStudentNumButton의 text를 "--학번"으로 표시(기존 text는 "학번 수정")
+ -multiMajorButton의 text를 설정된 전공과정 내용으로 변경(기존 text는 "전공과정 변경(복수/부전공)")
+
+

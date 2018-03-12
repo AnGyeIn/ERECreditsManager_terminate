@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -128,7 +129,8 @@ import static agi.erecreditsmanager.DataManager.thiExp;
 public class MainActivity extends AppCompatActivity {
 
     ListView listView, forLecListView;
-    TextView totalCreditsTextView, studentNumTextView, forLecTextView;
+    TextView totalCreditsTextView, forLecTextView;
+    Button changeStudentNumButton, multiMajorButton;
     LinearLayout studentNumLayout, forLecLayout;
     RelativeLayout totalLayout;
     EditText studentNumEditText, forLecSpinnerEditText;
@@ -158,10 +160,11 @@ public class MainActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listView);
         totalCreditsTextView = (TextView) findViewById(R.id.totalCreditsTextView);
-        studentNumTextView = (TextView) findViewById(R.id.studentNumTextView);
+        changeStudentNumButton = (Button) findViewById(R.id.changeStudentNumButton);
         studentNumLayout = (LinearLayout) findViewById(R.id.studentNumLayout);
         studentNumEditText = (EditText) findViewById(R.id.studentNumEditText);
         totalLayout = (RelativeLayout) findViewById(R.id.totalLayout);
+        multiMajorButton = (Button) findViewById(R.id.multiMajorButton);
         forLecLayout = (LinearLayout) findViewById(R.id.forLecLayout);
         forLecTextView = (TextView) findViewById(R.id.forLecTextView);
         forLecListView = (ListView) findViewById(R.id.forLecListView);
@@ -223,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
             totalLayout.setVisibility(View.INVISIBLE);
         } else {
             studentNumLayout.setVisibility(View.INVISIBLE);
-            studentNumTextView.setText(total.getStudentNum() + "학번");
+            changeStudentNumButton.setText(total.getStudentNum() + "학번");
             setting();
 
             if(total.getStudentNum() >= 16) {
@@ -565,7 +568,7 @@ public class MainActivity extends AppCompatActivity {
             total.setMajor(major);
             total.setNormal(normal);
             total.setStudentNum(studentNum);
-            studentNumTextView.setText(studentNum + "학번");
+            changeStudentNumButton.setText(studentNum + "학번");
             setting();
 
             if(total.getStudentNum() >= 16) {
