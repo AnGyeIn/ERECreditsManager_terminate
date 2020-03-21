@@ -12,11 +12,9 @@ import java.util.ArrayList;
 import agi.erecreditsmanager.ForLecture.ForLecture;
 import agi.erecreditsmanager.ForLecture.ForLectureLayout;
 
-import static agi.erecreditsmanager.MainActivity.ERETMToast;
-
 public class ForLecAdapter extends BaseAdapter {
 
-    ArrayList<ForLecture> forLectures = new ArrayList<ForLecture>();
+    ArrayList<ForLecture> forLectures = new ArrayList<>();
     Context context;
 
     public ForLecAdapter(Context context) {
@@ -52,10 +50,10 @@ public class ForLecAdapter extends BaseAdapter {
                 try {
                     forLectures.remove(position);
                     notifyDataSetChanged();
-                    ERETMToast(context, "외국어진행강좌가 삭제되었습니다.", Toast.LENGTH_LONG);
+                    MainActivity.Companion.ERETMToast(context, "외국어진행강좌가 삭제되었습니다.", Toast.LENGTH_LONG);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ERETMToast(context, "외국어진행강좌 삭제 실패", Toast.LENGTH_LONG);
+                    MainActivity.Companion.ERETMToast(context, "외국어진행강좌 삭제 실패", Toast.LENGTH_LONG);
                 }
             }
         });
