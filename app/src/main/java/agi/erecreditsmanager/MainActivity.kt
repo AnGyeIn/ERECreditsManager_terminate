@@ -665,11 +665,15 @@ class MainActivity : AppCompatActivity() {
             val multiMajorDialogLayout = MultiMajorDialogLayout(this@MainActivity)
             setView(multiMajorDialogLayout)
             setPositiveButton("확인") { _, i ->
-                val selectedMajor = multiMajorDialogLayout.checkSelectedMajor()
-                ERETMToast(this@MainActivity, selectedMajor + "을 선택하셨습니다.", Toast.LENGTH_LONG)
-                multiMajorButton.text = selectedMajor
-                progressingMajor = selectedMajor
-                changeMajorProcess(selectedMajor)
+                try {
+                    val selectedMajor = multiMajorDialogLayout.checkSelectedMajor()
+                    ERETMToast(this@MainActivity, selectedMajor + "을 선택하셨습니다.", Toast.LENGTH_LONG)
+                    multiMajorButton.text = selectedMajor
+                    progressingMajor = selectedMajor
+                    changeMajorProcess(selectedMajor)
+                } catch(e : Exception) {
+                    ERETMToast(this@MainActivity, "전공과정이 선택되지 않았습니다.", Toast.LENGTH_LONG)
+                }
             }
             setNegativeButton("취소") { _, i ->
 
