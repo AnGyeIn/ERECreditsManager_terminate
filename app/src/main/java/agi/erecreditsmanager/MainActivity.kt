@@ -469,6 +469,11 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
+    override fun onStop() {
+        save()
+        super.onStop()
+    }
+
     fun studentNumSave() {
         try {
             studentNum = Integer.parseInt(studentNumEditText.text.toString())

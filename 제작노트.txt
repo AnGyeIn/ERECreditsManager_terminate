@@ -290,14 +290,25 @@ Class 위계구조
  -(한계)CheckBox, RadioButton의 색상도 바꾸지 못 함
 
 ---[버전 6.0]---
--사용 언어 변경(Java -> Kotlin)
- -MainActivity.java -> MainActivity.kt 전환 완료(20200321)
- -DataManager.java -> DataManager.kt 전환 완료(20200322)
- -ERETMToastLayout.java -> ERETMToastLayout.kt 전환 완료(20200322)
- -MultiMajorDialogLayout.java -> MultiMajorDialogLayout.kt 전환 완료(20200322)
+-사용 언어 변경(Java -> Kotlin) 파일
+ -MainActivity.java -> MainActivity.kt			전환 완료(20200321)
+ -DataManager.java -> DataManager.kt			전환 완료(20200322)
+ -ERETMToastLayout.java -> ERETMToastLayout.kt		전환 완료(20200322)
+ -MultiMajorDialogLayout.java -> MultiMajorDialogLayout.kt	전환 완료(20200322)
+ -TypeLayout.java -> TypeLayout.kt			전환 완료(20200322)
+ -LectureWorldLayout.java -> LectureWorldLayout.kt	전환 완료(20200322)
+ -LectureGroupLayout.java -> LectureGroupLayout.kt	전환 완료(20200322)
+ -LectureFieldLayout.java -> LectureFieldLayout.kt		전환 완료(20200322)
+ -LectureLayout.java -> LectureLayout.kt			전환 완료(20200322)
+ -FreeLectureLayout.java -> FreeLectureLayout.kt		전환 완료(20200322)
+ -ForLectureLayout.java -> ForLectureLayout.kt		전환 완료(20200322)
+ -AddedLectureLayout.java -> AddedLectureLayout.kt	전환 완료(20200322)
 
 -변경할 수 없는 파일(기존 저장 내용 때문)
  -Total.java
 
 -삭제한 파일
  -ERETMSpinnerDropdownItemLayout.java : Spinner에 사용하는 Adapter를 ArrayAdapter로 변경하면서 ArrayAdapter 생성 시 Layout 리소스를 직접 전달해서 Layout 구현 파일은 필요하지 않게 되어 삭제(20200322)
+
+-추가 기능
+ -앱 내 버튼이 아닌 네비게이션 바를 이용한 종료 시에도 자동 저장 되도록 onStop() 메서드 Override
