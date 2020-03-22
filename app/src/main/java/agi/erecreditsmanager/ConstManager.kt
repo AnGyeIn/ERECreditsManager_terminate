@@ -1,8 +1,5 @@
 package agi.erecreditsmanager
 
-import android.content.Context
-import android.widget.Toast
-
 object ConstManager {
     const val OFF = false
     const val ON = true

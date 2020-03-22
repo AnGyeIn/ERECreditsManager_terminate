@@ -25,6 +25,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.eretm_toastborder.view.*
 import java.io.*
 
 class MainActivity : AppCompatActivity() {

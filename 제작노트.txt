@@ -293,4 +293,5 @@ Class 위계구조
 -사용 언어 변경(Java -> Kotlin)
  -MainActivity.java -> MainActivity.kt 전환 완료(20200321)
  -DataManager.java -> DataManager.kt 전환 완료(20200322)
+ -ERETMToastLayout.java -> ERETMToastLayout.kt 전환 완료(20200322)
  
