@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import agi.erecreditsmanager.CreditManager;
 
-import static agi.erecreditsmanager.DataManager.LECTURE_FIELD;
-import static agi.erecreditsmanager.DataManager.OFF;
-import static agi.erecreditsmanager.DataManager.TYPE;
+import static agi.erecreditsmanager.ConstManager.LECTURE_FIELD;
+import static agi.erecreditsmanager.ConstManager.OFF;
+import static agi.erecreditsmanager.ConstManager.TYPE;
 
 public class Type extends CreditManager {
 

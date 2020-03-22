@@ -2,7 +2,7 @@ package agi.erecreditsmanager.FreeLecture;
 
 import agi.erecreditsmanager.CreditManager;
 
-import static agi.erecreditsmanager.DataManager.FREE_LECTURE;
+import static agi.erecreditsmanager.ConstManager.FREE_LECTURE;
 
 public class FreeLecture extends CreditManager {
 

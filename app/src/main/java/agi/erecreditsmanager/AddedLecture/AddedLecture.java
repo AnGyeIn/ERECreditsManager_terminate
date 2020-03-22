@@ -3,7 +3,7 @@ package agi.erecreditsmanager.AddedLecture;
 import agi.erecreditsmanager.CreditManager;
 import agi.erecreditsmanager.FreeLecture.FreeLecture;
 
-import static agi.erecreditsmanager.DataManager.ADDED_LECTURE;
+import static agi.erecreditsmanager.ConstManager.ADDED_LECTURE;
 
 public class AddedLecture extends CreditManager {
 

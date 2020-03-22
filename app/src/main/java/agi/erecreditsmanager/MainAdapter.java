@@ -26,15 +26,15 @@ import agi.erecreditsmanager.LectureWorld.LectureWorldLayout;
 import agi.erecreditsmanager.Type.Type;
 import agi.erecreditsmanager.Type.TypeLayout;
 
-import static agi.erecreditsmanager.DataManager.ADDED_LECTURE;
-import static agi.erecreditsmanager.DataManager.FREE_LECTURE;
-import static agi.erecreditsmanager.DataManager.LECTURE;
-import static agi.erecreditsmanager.DataManager.LECTURE_FIELD;
-import static agi.erecreditsmanager.DataManager.LECTURE_GROUP;
-import static agi.erecreditsmanager.DataManager.LECTURE_WORLD;
-import static agi.erecreditsmanager.DataManager.OFF;
-import static agi.erecreditsmanager.DataManager.ON;
-import static agi.erecreditsmanager.DataManager.TYPE;
+import static agi.erecreditsmanager.ConstManager.ADDED_LECTURE;
+import static agi.erecreditsmanager.ConstManager.FREE_LECTURE;
+import static agi.erecreditsmanager.ConstManager.LECTURE;
+import static agi.erecreditsmanager.ConstManager.LECTURE_FIELD;
+import static agi.erecreditsmanager.ConstManager.LECTURE_GROUP;
+import static agi.erecreditsmanager.ConstManager.LECTURE_WORLD;
+import static agi.erecreditsmanager.ConstManager.OFF;
+import static agi.erecreditsmanager.ConstManager.ON;
+import static agi.erecreditsmanager.ConstManager.TYPE;
 
 public class MainAdapter extends BaseAdapter {
 

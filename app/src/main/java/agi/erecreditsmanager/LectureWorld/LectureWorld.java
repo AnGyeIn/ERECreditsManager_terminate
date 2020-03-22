@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import agi.erecreditsmanager.CreditManager;
 
-import static agi.erecreditsmanager.DataManager.LECTURE_WORLD;
-import static agi.erecreditsmanager.DataManager.OFF;
+import static agi.erecreditsmanager.ConstManager.LECTURE_WORLD;
+import static agi.erecreditsmanager.ConstManager.OFF;
 
 public class LectureWorld extends CreditManager {
 

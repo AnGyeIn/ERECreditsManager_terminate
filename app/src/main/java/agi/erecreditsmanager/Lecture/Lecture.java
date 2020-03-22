@@ -2,7 +2,7 @@ package agi.erecreditsmanager.Lecture;
 
 import agi.erecreditsmanager.CreditManager;
 
-import static agi.erecreditsmanager.DataManager.LECTURE;
+import static agi.erecreditsmanager.ConstManager.LECTURE;
 
 public class Lecture extends CreditManager {
 
