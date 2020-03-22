@@ -4,6 +4,7 @@ import agi.erecreditsmanager.ConstManager.EREOnly
 import agi.erecreditsmanager.ConstManager.EREnOther
 import agi.erecreditsmanager.ConstManager.OthernERE
 import agi.erecreditsmanager.ConstManager.OthernSubERE
+import agi.erecreditsmanager.ForLecture.ForLecAdapter
 import agi.erecreditsmanager.ForLecture.ForLecture
 import agi.erecreditsmanager.FreeLecture.FreeLecture
 import agi.erecreditsmanager.Lecture.Lecture
@@ -20,6 +21,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -47,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     val types = arrayOf("전공", "교양")
     val forLecAdapter = ForLecAdapter(this)
 
-    var forLectures = ArrayList<ForLecture>()
+    var forLectures = arrayListOf<ForLecture>()
 
     var isLifeChecked = false
 
@@ -64,7 +66,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        forLecListView.adapter = this.forLecAdapter
+        forLecRecyclerView.run {
+            adapter = forLecAdapter
+            layoutManager = LinearLayoutManager(this@MainActivity)
+        }
 
         val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
         if(permissionCheck != PackageManager.PERMISSION_GRANTED)
@@ -115,7 +120,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        forLecListView.adapter = forLecAdapter.apply {
+        forLecRecyclerView.adapter = forLecAdapter.apply {
             this.forLectures = this@MainActivity.forLectures
         }
     }
@@ -656,8 +661,9 @@ class MainActivity : AppCompatActivity() {
 
     fun addForLecture(view : View) {
         val forLectureName = forLecSpinnerEditText.text.toString()
-        if((this.forLectureType.isNotEmpty()) && (forLectureName.isNotEmpty())) {
-            this.forLecAdapter.setForLecture(ForLecture(this.forLectureType, forLectureName))
+        if((forLectureType.isNotEmpty()) && (forLectureName.isNotEmpty())) {
+            forLecAdapter.setForLecture(ForLecture(forLectureType, forLectureName))
+            ERETMToast(this, "외국어진행강좌가 추가되었습니다.", Toast.LENGTH_LONG)
         } else {
             ERETMToast(this, "과목의 종류와 과목명을 설정해주세요.", Toast.LENGTH_LONG)
         }

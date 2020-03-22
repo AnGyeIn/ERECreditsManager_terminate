@@ -16,13 +16,4 @@ class ForLectureLayout(context : Context) : RelativeLayout(context) {
             deleteButton
         }
     }
-
-    //MainAdapter 재구현 후 삭제
-    fun setForLectureTextView(text : String) {
-        forLectureTextView.text = text
-    }
-
-    fun getDeleteButton() : Button {
-        return deleteButton
-    }
 }

@@ -306,9 +306,24 @@ Class 위계구조
 
 -변경할 수 없는 파일(기존 저장 내용 때문)
  -Total.java
+ -CreditManager.java
+ -Type.java
+ -LectureWorld.java
+ -LectureGroup.java
+ -LectureField.java
+ -Lecture.java
+ -FreeLecture.java
+ -ForLecture.java
+ -AddedLecture.java
 
 -삭제한 파일
  -ERETMSpinnerDropdownItemLayout.java : Spinner에 사용하는 Adapter를 ArrayAdapter로 변경하면서 ArrayAdapter 생성 시 Layout 리소스를 직접 전달해서 Layout 구현 파일은 필요하지 않게 되어 삭제(20200322)
+
+-ListView -> RecyclerView로 변경
+ -외국어진행강좌 관련
+  -ForLecAdapter.java 삭제
+  -ForLecAdapter.kt, ForLectureViewHolder.kt 생성
+  -forLecListView -> forRecyclerView	전환 완료(20200322)
 
 -추가 기능
  -앱 내 버튼이 아닌 네비게이션 바를 이용한 종료 시에도 자동 저장 되도록 onStop() 메서드 Override
