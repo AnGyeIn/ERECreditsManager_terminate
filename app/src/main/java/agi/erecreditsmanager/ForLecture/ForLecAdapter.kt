@@ -1,13 +1,16 @@
 package agi.erecreditsmanager.ForLecture
 
-import agi.erecreditsmanager.MainActivity
+
+import agi.erecreditsmanager.MainActivity.Companion.ERETMToast
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.forlecture.view.*
 
-class ForLecAdapter(context : Context) : RecyclerView.Adapter<ForLectureViewHolder>() {
+class ForLecAdapter(context : Context) : RecyclerView.Adapter<ForLecAdapter.ForLectureViewHolder>() {
 
     var forLectures = arrayListOf<ForLecture>()
     val context = context
@@ -26,14 +29,14 @@ class ForLecAdapter(context : Context) : RecyclerView.Adapter<ForLectureViewHold
             val layout = this as ForLectureLayout
             layout.run {
                 forLectureTextView.text = "[${forLecture.type}]${forLecture.name}"
-                deleteButton.setOnClickListener() { v ->
+                deleteButton.setOnClickListener {
                     try {
                         forLectures.removeAt(position)
                         notifyDataSetChanged()
-                        MainActivity.ERETMToast(context, "외국어진행강좌가 삭제되었습니다.", Toast.LENGTH_LONG)
+                        ERETMToast(context, "외국어진행강좌가 삭제되었습니다.", Toast.LENGTH_LONG)
                     } catch(e : Exception) {
                         e.printStackTrace()
-                        MainActivity.ERETMToast(context, "외국어진행강좌 삭제 실패", Toast.LENGTH_LONG)
+                        ERETMToast(context, "외국어진행강좌 삭제 실패", Toast.LENGTH_LONG)
                     }
                 }
             }
@@ -44,4 +47,6 @@ class ForLecAdapter(context : Context) : RecyclerView.Adapter<ForLectureViewHold
         forLectures.add(forLecture)
         notifyDataSetChanged()
     }
+
+    class ForLectureViewHolder(override val containerView : View) : RecyclerView.ViewHolder(containerView), LayoutContainer
 }

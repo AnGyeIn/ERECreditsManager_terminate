@@ -15,7 +15,6 @@ class TypeLayout(context : Context) : RelativeLayout(context) {
         }
     }
 
-    //MainAdapter 재구현 후 삭제
     fun setTypeCreditsTextView(text : String) {
         typeCreditsTextView.text = text
     }

@@ -15,7 +15,6 @@ class LectureFieldLayout(context : Context) : RelativeLayout(context) {
         }
     }
 
-    //MainAdapter 재구현 후 삭제
     fun setLectureFieldCreditsTextView(text : String) {
         lectureFieldCreditsTextView.text = text
     }

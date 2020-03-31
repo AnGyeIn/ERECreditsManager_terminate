@@ -18,7 +18,6 @@ class FreeLectureLayout(context : Context) : RelativeLayout(context) {
         }
     }
 
-    //MainAdapter 재구현 후 삭제
     fun getAddButton() : Button {
         return addButton
     }
@@ -32,7 +31,7 @@ class FreeLectureLayout(context : Context) : RelativeLayout(context) {
     }
 
     fun setInitiation() {
-        nameText.setHint("      과목명 입력")
-        creditText.setHint("학점 입력")
+        nameText.hint = "      과목명 입력"
+        creditText.hint = "학점 입력"
     }
 }

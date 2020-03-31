@@ -18,7 +18,6 @@ class AddedLectureLayout(context : Context) : RelativeLayout(context) {
         }
     }
 
-    //MainAdapter 재구현 후 삭제
     fun setAddedLectureCreditTextView(text : String) {
         addedLectureCreditTextView.text = text
     }

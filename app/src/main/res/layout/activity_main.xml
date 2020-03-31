@@ -155,7 +155,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="ex) 16학번이면 '16'입력"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:textColor="#E4B92A"
             android:textColorHint="#88E4B92A"
             android:textSize="14sp" />
@@ -204,6 +204,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="과목명을 입력하세요."
+                android:inputType="text"
                 android:textColor="#E4B92A"
                 android:textColorHint="#88E4B92A"
                 android:textSize="16dp" />

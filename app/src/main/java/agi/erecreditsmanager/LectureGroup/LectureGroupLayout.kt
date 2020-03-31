@@ -15,7 +15,6 @@ class LectureGroupLayout(context : Context) : RelativeLayout(context) {
         }
     }
 
-    //MainAdapter 재구현 후 삭제
     fun setLectureGroupCreditsTextView(text : String) {
         lectureGroupCreditsTextView.text = text
     }

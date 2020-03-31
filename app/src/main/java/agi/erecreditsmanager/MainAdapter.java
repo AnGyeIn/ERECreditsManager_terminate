@@ -222,10 +222,7 @@ public class MainAdapter extends BaseAdapter {
 
         final CheckedTextView lectureCreditTextView = layout.getLectureCreditTextView();
 
-        if(lecture.getMultiplier() == 1)    //스크롤 작동 중 체크박스가 화면에서 벗어난 뒤 다시 나타날 때 체크가 해제되는 현상 방지
-            lectureCreditTextView.setChecked(true);
-        else
-            lectureCreditTextView.setChecked(false);
+        lectureCreditTextView.setChecked(lecture.getMultiplier()==1);   //스크롤 작동 중 체크박스가 화면에서 벗어난 뒤 다시 나타날 때 체크가 해제되는 현상 방지
 
         lectureCreditTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -279,10 +276,7 @@ public class MainAdapter extends BaseAdapter {
 
         final CheckedTextView addedLectureCreditTextView = layout.getAddedLectureCreditTextView();
 
-        if(addedLecture.getMultiplier() == 1)   //스크롤 작동 중 체크박스가 화면에서 벗어난 뒤 다시 나타날 때 체크가 해제되는 현상 방지
-            addedLectureCreditTextView.setChecked(true);
-        else
-            addedLectureCreditTextView.setChecked(false);
+        addedLectureCreditTextView.setChecked(addedLecture.getMultiplier()==1); //스크롤 작동 중 체크박스가 화면에서 벗어난 뒤 다시 나타날 때 체크가 해제되는 현상 방지
 
         addedLectureCreditTextView.setOnClickListener(new View.OnClickListener() {
             @Override

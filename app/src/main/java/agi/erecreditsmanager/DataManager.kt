@@ -3,6 +3,7 @@ package agi.erecreditsmanager
 import agi.erecreditsmanager.FreeLecture.FreeLecture
 import agi.erecreditsmanager.Lecture.Lecture
 import agi.erecreditsmanager.LectureField.LectureField
+import agi.erecreditsmanager.LectureField.LectureFieldLayout
 import agi.erecreditsmanager.LectureGroup.LectureGroup
 import agi.erecreditsmanager.LectureWorld.LectureWorld
 import agi.erecreditsmanager.Type.Type
@@ -17,6 +18,7 @@ class DataManager {
     var culture_basic = LectureField("학문의 기초", 34)
     var keyCulture = LectureField("핵심교양", 9)
     var culture_world = LectureField("학문의 세계(2개 영역 이상)", 6)
+    var culture_world_sin20 = LectureField("학문의 세계(3개 영역 이상)", 12)  //20학번 이후
     var culture_engineering = LectureField("공대 사회/창의성", 6)
     var major_necessary = LectureField("전공필수", 19)
     var major_optNec = LectureField("전공선택필수", 9)
@@ -45,8 +47,12 @@ class DataManager {
     //Lecture
     var sciEngWri = Lecture("과학과 기술 글쓰기", 3)
     var korean = Lecture("대학국어", 3)
+    var colWri1 = Lecture("대학 글쓰기 1", 2)
+    var colWri2 = Lecture("대학 글쓰기 2: 과학기술 글쓰기", 2)
     var math1 = Lecture("(고급)수학 및 연습1", 3)
     var math2 = Lecture("(고급)수학 및 연습2", 3)
+    var mathPra1 = Lecture("수학 1과 수학연습 1", 3)
+    var mathPra2 = Lecture("수학 2와 수학연습 2", 3)
     var engMat1 = Lecture("공학수학1", 3)
     var engMat2 = Lecture("공학수학2", 3)
     var physics1 = Lecture("(고급)물리학1(물리의 기본1)", 3)
@@ -73,6 +79,8 @@ class DataManager {
     var earSysSciExp = Lecture("지구시스템과학실험", 1)
     var computer = Lecture("컴퓨터의 개념 및 실습", 3)
     var eneResFut = Lecture("에너지자원과미래", 2)
+    var eneUnd = Lecture("에너지자원공학의이해", 1)
+    var enePra = Lecture("에너지자원공학실습", 1)
     var advResGeo = Lecture("응용자원지질", 3)
     var eneResFigAna = Lecture("에너지자원수치해석", 3)
     var driEng = Lecture("시추공학", 3)
@@ -80,11 +88,17 @@ class DataManager {
     var advEarChe = Lecture("응용지구화학", 3)
     var eneEcoEng = Lecture("에너지환경공학", 3)
     var eneResDyn = Lecture("에너지자원역학", 3)
+    var eneMat = Lecture("에너지자원재료역학", 3)
     var eneEcoTecAdm = Lecture("에너지환경기술경영", 3)
     var earPhyEng = Lecture("지구물리공학", 3)
+    var eneThe = Lecture("에너지자원열역학", 3)
+    var eneFlu = Lecture("에너지자원유체역학", 3)
+    var eneEar = Lecture("에너지자원지구화학", 3)
+    var elaExp = Lecture("탄성파탐사", 3)
     var stoDynExp = Lecture("암석역학및실험", 3)
     var oilGasEngExp = Lecture("석유가스공학및실험", 3)
     var resEngPra = Lecture("자원공학실습", 1)
+    var resEngDes = Lecture("자원공학설계", 1)
     var resProEng = Lecture("자원처리공학", 3)
 
     //FreeLecture
@@ -101,6 +115,5 @@ class DataManager {
     var optFree = FreeLecture(major_optional, 0)
     var othFree = FreeLecture(major_other, 0)
     var norFree = FreeLecture(normal, 0)
-    var majorFree = FreeLecture(major, 0)
     var majorOptOrNecFree = FreeLecture(major_optOrNec, 0)
 }

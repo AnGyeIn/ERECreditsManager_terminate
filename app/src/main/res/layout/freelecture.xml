@@ -4,32 +4,32 @@
     android:background="#2F2F2F">
 
     <EditText
+        android:id="@+id/nameText"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/nameText"
+        android:layout_alignParentTop="true"
+        android:ems="10"
         android:hint="      과목명 입력"
-        android:textSize="16dp"
+        android:inputType="text"
         android:textColor="#E4B92A"
-        android:textColorHint="#88E4B92A"/>
+        android:textColorHint="#88E4B92A"
+        android:textSize="16dp" />
 
     <EditText
+        android:id="@+id/creditText"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/nameText"
         android:layout_toEndOf="@+id/nameText"
-        android:id="@+id/creditText"
+        android:layout_toRightOf="@+id/nameText"
+        android:ems="10"
         android:hint="학점 입력"
-        android:textSize="16dp"
+        android:inputType="number"
         android:textColor="#E4B92A"
-        android:textColorHint="#88E4B92A"/>
+        android:textColorHint="#88E4B92A"
+        android:textSize="16dp" />
 
     <Button
         android:text="추가"

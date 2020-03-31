@@ -316,6 +316,10 @@ Class 위계구조
  -ForLecture.java
  -AddedLecture.java
 
+-ERETMToast() : 테스트 동안은 MainActivity.kt 내의 Companion object에 넣어두고 최종적으론 ConstManager.kt로 옮기려고 했으나 실패
+ -옮기면 ForLecAdapter.kt에서는 호출 가능하나 MainAdapter.java에서는 호출 불가능
+ -java 파일에서 호출할 수 있도록 하기 위해 그대로 MainActivity.kt에 두는 것으로 결정
+
 -삭제한 파일
  -ERETMSpinnerDropdownItemLayout.java : Spinner에 사용하는 Adapter를 ArrayAdapter로 변경하면서 ArrayAdapter 생성 시 Layout 리소스를 직접 전달해서 Layout 구현 파일은 필요하지 않게 되어 삭제(20200322)
 
@@ -324,6 +328,37 @@ Class 위계구조
   -ForLecAdapter.java 삭제
   -ForLecAdapter.kt, ForLectureViewHolder.kt 생성
   -forLecListView -> forRecyclerView	전환 완료(20200322)
+  -ForLectureViewHolder.kt 파일 삭제 후 ForLecAdapter 내부 class로 정의	(20200331)
+ -메인 화면 관련
+  -RecyclerView 뿐만 아니라 그냥 ListView로 하더라도 Adapter class를 kotlin으로 변경하는 것 불가능
+   -원인) kotlin에서는 부모 class의 변수를 자식 class에서 다시 선언 할 수 없는데 애초에 CreditManager의 code와 별도로 그 하위 class들에서 개별 code를 선언해서 저장함
+   -이들을 Adapter의 ArrayList에 넣기 위해 CreditManager로 casting한 뒤 getView로 꺼내면 저장된 code가 아닌 CreditManager의 code를 읽게 됨
+   -수정하려면 CreditManager 및 하위 class들을 수정해야 하는데 그러면 기존 데이터를 불러 올 수 없음
+   -데이터 보존을 위해서는 Adapter를 java파일로 그대로 쓰고 그 안에서 성능 개선을 해야 할 듯
+   -마찬가지 이유로 원래 MainAdapter.kt 전환 후 삭제하려고 했던 각 CreditManagerLayout들의 getter, setter들도 그대로 유지
 
 -추가 기능
  -앱 내 버튼이 아닌 네비게이션 바를 이용한 종료 시에도 자동 저장 되도록 onStop() 메서드 Override
+
+-학번 업데이트
+ -18학번
+  -전공
+   -전필
+    -자원공학실습 -> 자원공학설계 추가
+ -19학번
+  -교양 학점 41로 증가
+   -학문의 기초 학점 35로 증가
+    -과학과 기술 글쓰기 -> 대학 글쓰기 1, 대학 글쓰기 2: 과학기술 글쓰기 추가
+    -수학 및 연습1, 2 -> 수학 1과 수학연습 1, 수학 2와 수학연습 2 추가
+  -전공
+   -전필 학점 21로 증가
+   -전선 학점 38로 감소
+  -그 외 학점 27로 감소
+ -20학번
+  -교양 학점 47로 증가
+   -학문의 세계 학점 12로 증가
+   -공대 사회/창의성 삭제
+  -전공
+   -전필 학점 30으로 증가
+   -전선 학점 29로 감소
+  -그 외 학점 21로 감소
