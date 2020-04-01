@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="agi.erecreditsmanager">
+    package="agi.erecreditsmanager"
+    android:versionCode="9"
+    android:versionName="6.0">
 
     <application
         android:allowBackup="true"

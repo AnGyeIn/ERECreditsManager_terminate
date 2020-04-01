@@ -9,8 +9,8 @@ android {
         applicationId "agi.erecreditsmanager"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 8
-        versionName "5.0"
+        versionCode 9
+        versionName "6.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
