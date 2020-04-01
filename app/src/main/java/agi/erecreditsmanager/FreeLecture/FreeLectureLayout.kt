@@ -15,11 +15,15 @@ class FreeLectureLayout(context : Context) : RelativeLayout(context) {
             nameText
             creditText
             addButton
+            editButton
         }
     }
 
     fun getAddButton() : Button {
         return addButton
+    }
+    fun getEditButton() : Button {
+        return editButton
     }
 
     fun getFreeName() : String {

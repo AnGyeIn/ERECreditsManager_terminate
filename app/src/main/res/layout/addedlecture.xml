@@ -4,31 +4,34 @@
     android:background="#2F2F2F">
 
     <HorizontalScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <CheckedTextView
                 android:id="@+id/addedLectureCreditTextView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="1"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                android:paddingTop="5dp"
                 android:text="(학점)"
-                android:textSize="16dp"
-                android:textColor="#E4B92A"/>
+                android:textColor="#E4B92A"
+                android:textSize="16dp" />
 
             <Button
                 android:id="@+id/deleteButton"
                 android:layout_width="60dp"
                 android:layout_height="40dp"
+                android:layout_weight="0"
+                android:background="#080404"
                 android:text="삭제"
                 android:textColor="#E4B92A"
-                android:background="#080404"/>
+                android:visibility="invisible" />
+
         </LinearLayout>
     </HorizontalScrollView>
 

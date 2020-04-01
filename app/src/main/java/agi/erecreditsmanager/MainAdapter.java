@@ -40,6 +40,7 @@ public class MainAdapter extends BaseAdapter {
 
     ArrayList<CreditManager> creditManagers = new ArrayList<>();
     Context context;
+    private Boolean isEditable = false;
 
     public MainAdapter(Context context) {
         this.context = context;
@@ -265,6 +266,23 @@ public class MainAdapter extends BaseAdapter {
             }
         });
 
+        final Button editButton = layout.getEditButton();
+        editButton.setText(isEditable ? "확인" : "편집");
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isEditable) {
+                    isEditable = true;
+                    notifyDataSetChanged();
+                } else {
+                    isEditable = false;
+                    notifyDataSetChanged();
+                }
+
+            }
+        });
+
         return layout;
     }
 
@@ -292,8 +310,10 @@ public class MainAdapter extends BaseAdapter {
             }
         });
 
-        final int j = i;
         final Button deleteButton = layout.getDeleteButton();
+        deleteButton.setVisibility(isEditable ? View.VISIBLE : View.INVISIBLE);
+
+        final int j = i;
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

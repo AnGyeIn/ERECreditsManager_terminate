@@ -366,3 +366,8 @@ Class 위계구조
   -creditText의 경우 앞에 붙어 있는 nameText inputType을 text로 지정했는데 creditText를 터치하면 forlecture Layout 자체가 초기화 되면서 nameText로 커서가 이동하는 문제 발생
   -creditText의 inputType을 number|text로 설정하는 것으로 해결 - 앱 설치 후 최초 1회는 튕기는 현상 그대로 발생, 그 이후엔 정상 작동 하는 듯
  -도움말 AlertDialog에 에자공 홈페이지 표준 교양 이수 안내 게시글 링크 버튼 추가
+ -freelecture에 편집 버튼(editButton) 추가
+  -addedlecture들의 deleteButton이 편집 기능이 활성화 됐을 때만 보이도록 가시성 조작
+  -이를 위해 MainAdapter에 (boolean) isEditable 추가
+  -편집 기능 활성화 시 addedlecture들의 드래그를 통한 순서 변경 기능 도입도 시도했으나, MainAdapter에서 AddedLecture의 upperManager에 접근할 수 없어서 포기함
+   -AddedLecture.class를 수정하면 가능하지만 그러면 기존 데이터를 읽어오지 못하게 됨
