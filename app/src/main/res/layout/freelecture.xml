@@ -26,7 +26,7 @@
         android:layout_toRightOf="@+id/nameText"
         android:ems="10"
         android:hint="학점 입력"
-        android:inputType="number"
+        android:inputType="number|text"
         android:textColor="#E4B92A"
         android:textColorHint="#88E4B92A"
         android:textSize="16dp" />

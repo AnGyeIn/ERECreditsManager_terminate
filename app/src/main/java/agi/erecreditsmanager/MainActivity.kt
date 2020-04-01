@@ -14,7 +14,10 @@ import agi.erecreditsmanager.LectureWorld.LectureWorld
 import agi.erecreditsmanager.Type.Type
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.drm.DrmStore
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -1076,6 +1079,9 @@ class MainActivity : AppCompatActivity() {
                     "학과사무실 : 02-880-7219")
             setPositiveButton("확인") { _, _ ->
 
+            }
+            setNeutralButton("에너지자원공학과 홈페이지 링크") { _, _ ->
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://ere.snu.ac.kr/ko/node/26")))
             }
             create().show()
         }

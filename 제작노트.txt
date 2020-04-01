@@ -337,9 +337,6 @@ Class 위계구조
    -데이터 보존을 위해서는 Adapter를 java파일로 그대로 쓰고 그 안에서 성능 개선을 해야 할 듯
    -마찬가지 이유로 원래 MainAdapter.kt 전환 후 삭제하려고 했던 각 CreditManagerLayout들의 getter, setter들도 그대로 유지
 
--추가 기능
- -앱 내 버튼이 아닌 네비게이션 바를 이용한 종료 시에도 자동 저장 되도록 onStop() 메서드 Override
-
 -학번 업데이트
  -18학번
   -전공
@@ -362,3 +359,10 @@ Class 위계구조
    -전필 학점 30으로 증가
    -전선 학점 29로 감소
   -그 외 학점 21로 감소
+
+-추가 기능
+ -앱 내 버튼이 아닌 네비게이션 바를 이용한 종료 시에도 자동 저장 되도록 onStop() 메서드 Override
+ -숫자 입력하는 EditText(studentNumEditText, (forlecture) creditText) inputType 속성값 number 할당
+  -creditText의 경우 앞에 붙어 있는 nameText inputType을 text로 지정했는데 creditText를 터치하면 forlecture Layout 자체가 초기화 되면서 nameText로 커서가 이동하는 문제 발생
+  -creditText의 inputType을 number|text로 설정하는 것으로 해결 - 앱 설치 후 최초 1회는 튕기는 현상 그대로 발생, 그 이후엔 정상 작동 하는 듯
+ -도움말 AlertDialog에 에자공 홈페이지 표준 교양 이수 안내 게시글 링크 버튼 추가
