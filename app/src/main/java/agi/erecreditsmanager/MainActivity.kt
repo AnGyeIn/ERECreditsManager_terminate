@@ -24,6 +24,7 @@ import android.os.Environment
 import android.support.annotation.RequiresApi
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -33,6 +34,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.eretm_toastborder.view.*
+import kotlinx.android.synthetic.main.maildialog.view.*
 import java.io.*
 
 class MainActivity : AppCompatActivity() {
@@ -1083,6 +1085,44 @@ class MainActivity : AppCompatActivity() {
             setNeutralButton("에너지자원공학과 홈페이지 링크") { _, _ ->
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://ere.snu.ac.kr/ko/node/26")))
             }
+            create().show()
+        }
+    }
+
+    fun onMailButtonClicked(v : View) {
+        AlertDialog.Builder(this).run {
+            setTitle("데이터 메일로 내보내기")
+            setMessage("기기변경 시 데이터 전달을 위해 메일로 데이터를 보낸 뒤 새로운 기기에서 메일의 첨부파일을 다운로드 할 수 있습니다.")
+            val mailDialogLayout = MailDialogLayout(this@MainActivity)
+            setView(mailDialogLayout)
+
+            setPositiveButton("메일 보내기") { _, _ ->
+                val address = mailDialogLayout.mailEditText.text.toString()
+                startActivity(Intent(Intent.ACTION_SEND, Uri.parse("mailto:")).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_EMAIL, arrayOf(address))
+                    putExtra(Intent.EXTRA_SUBJECT, "에자공 졸업 학점 체크리스트 데이터 파일")
+                    putExtra(Intent.EXTRA_TEXT, "=====\n" +
+                            "데이터 파일 첨부 방법\n" +
+                            "-> [파일에서 선택]\n" +
+                            "-> 가장 하단에 [기타 위치 - 디바이스]\n" +
+                            "(-> 상단 탭이 폰 기종으로 설정돼 있지 않으면 터치해서 폰 기종 선택(내부 저장소 접근))\n" +
+                            "-> 가장 하단에 [PersonalCredits] 파일 선택\n" +
+                            "-> 메일 전송\n" +
+                            "=====\n" +
+                            "새로운 폰에서 데이터 파일 다운로드 방법\n" +
+                            "첨부된 파일 길게 터치\n" +
+                            "-> [장치](다운로드)\n" +
+                            "-> 홈으로 이동 후 [내 파일] 접근" +
+                            "-> [Download] 폴더 접근\n" +
+                            "-> [PersonalCredits] 파일 길게 터치\n" +
+                            "-> 하단의 [이동]\n" +
+                            "-> 상단의 [내장 메모리]\n" +
+                            "-> [여기로 이동](완료)\n" +
+                            "=====")
+                })
+            }
+            setNegativeButton("취소") { _, _ -> }
             create().show()
         }
     }

@@ -84,7 +84,7 @@
             android:text="닫기"
             android:textColor="#E4B92A" />
 
-        <Button
+       <Button
             android:id="@+id/forLecOpenButton"
             android:layout_width="170dp"
             android:layout_height="40dp"
@@ -94,6 +94,18 @@
             android:onClick="openForLecLayout"
             android:text="외국어진행강좌 수강 체크"
             android:textColor="#E4B92A" />
+
+        <Button
+            android:id="@+id/mailButton"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/applyButton"
+            android:layout_margin="3dp"
+            android:layout_toRightOf="@+id/forLecOpenButton"
+            android:background="#080404"
+            android:text="데이터 내보내기"
+            android:textColor="#E4B92A"
+            android:onClick="onMailButtonClicked"/>
 
         <CheckBox
             android:id="@+id/lifeRespectCheckBox"

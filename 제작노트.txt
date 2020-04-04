@@ -371,3 +371,13 @@ Class 위계구조
   -이를 위해 MainAdapter에 (boolean) isEditable 추가
   -편집 기능 활성화 시 addedlecture들의 드래그를 통한 순서 변경 기능 도입도 시도했으나, MainAdapter에서 AddedLecture의 upperManager에 접근할 수 없어서 포기함
    -AddedLecture.class를 수정하면 가능하지만 그러면 기존 데이터를 읽어오지 못하게 됨
+
+---[버전 6.1]---
+-기기변경 시 데이터 전달을 위해 메일로 첨부하는 기능 추가
+ -activity_main에 mailButton 추가
+ -mailButton의 onClick 속성으로 onMailButtonClicked() 구현
+  -AlertDialog를 띄운 뒤 메일을 보낼 주소를 입력받아 메일 앱으로 이동
+   -메일 주소를 받을 mailEditText를 담은 maildialog 소스파일과 이를 구현하는 MailDialogLayout class 생성
+   -AletDialog에 설명과 함께 MailDialogLayout 객체 View로 세팅
+   -mailEditText의 text를 받아와서 Intent로 메일 앱으로 전달
+   -메일의 text로 데이터 파일 첨부 방법과 새로운 기기에서 다운로드 및 세팅 방법 매뉴얼 작성
