@@ -3,8 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '26.0.3'
+    compileSdkVersion 29
+    buildToolsVersion '29.0.3'
     defaultConfig {
         applicationId "agi.erecreditsmanager"
         minSdkVersion 15
@@ -12,6 +12,9 @@ android {
         versionCode 11
         versionName "6.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm67-v8a', 'x84_64'
+        }
     }
     buildTypes {
         release {
