@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2f2f2f">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:background="#080404"
+        android:onClick="backupClicked"
+        android:text="서버로 데이터 백업 진행하기"
+        android:textColor="#e4b92a"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7" />
+
+    <EditText
+        android:id="@+id/signupNameEditText"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:textColor="#e4b92a"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <EditText
+        android:id="@+id/signupSNumEditText"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:textColor="#e4b92a"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.4"
+        android:hint="XXXX-XXXXX"
+        android:textColorHint="#88e4b92a" />
+
+    <EditText
+        android:id="@+id/signupPasswordEditText"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:textColor="#e4b92a"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <EditText
+        android:id="@+id/signupPNumEditText"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:textColor="#e4b92a"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.8"
+        android:hint="XXX-XXXX-XXXX"
+        android:textColorHint="#88e4b92a"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="보다 나은 성능과 새로운 기능을 위해\n에자공 앱이 리뉴얼 되었습니다!\n새로운 앱을 다운받아 주세요!\n\n
+기존에 저장한 학점 체크리스트 데이터는 서버를 통해\n백업 후 새로운 앱에서 동기화할 수 있습니다.\n\n
+백업을 원하시면 회원가입/로그인을 위해\n다음 정보들을 입력해주세요.\n\n
+회원정보는 에자공 앱 기능 외의\n목적으로는 사용되지 않습니다."
+        android:textAlignment="center"
+        android:textColor="#e4b92a"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.10"
+        android:padding="3dp"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:textColor="#e4b92a"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:text="이름"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:textColor="#e4b92a"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:text="학번"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:textColor="#e4b92a"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:text="비밀번호"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:textColor="#e4b92a"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:text="연락처"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.8" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="리뉴얼 앱 다운받으러 가기"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        android:background="#080404"
+        android:textColor="#e4b92a"
+        app:layout_constraintVertical_bias="0.3"
+        android:onClick="toRenewalApp"/>
+</android.support.constraint.ConstraintLayout>
