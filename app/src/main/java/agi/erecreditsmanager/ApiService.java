@@ -10,8 +10,6 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface ApiService {
-    //todo: 앞에 키워드들 지워도 되는지
-    //    public static final String API_URL = "http://angyein.pythonanywhere.com/";
     String API_URL = "http://angyein.pythonanywhere.com/";
 
     @FormUrlEncoded
