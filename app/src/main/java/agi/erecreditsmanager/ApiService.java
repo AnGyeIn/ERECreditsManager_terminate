@@ -10,7 +10,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface ApiService {
-    String API_URL = "http://angyein.pythonanywhere.com/";
+    String API_URL = "http://ereappserver.pythonanywhere.com/"; //todo: url 바뀌면 변경
 
     @FormUrlEncoded
     @POST("api-token-auth/")
