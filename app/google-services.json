@@ -8,7 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:289143772681:android:7a3208816b1ec644eacad8",
+        "mobilesdk_app_id": "1:289143772681:android:fc4252049dd055b4eacad8",
         "android_client_info": {
           "package_name": "agi.erecreditsmanager"
         }
@@ -38,6 +38,13 @@
             {
               "client_id": "289143772681-kk9buuacbvq4r0k5hham70mbt2lr1111.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "289143772681-jci4k1iufc3hg0psjftkmhcd10eg81m4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.agistudio97.ere-app"
+              }
             }
           ]
         }
@@ -75,6 +82,13 @@
             {
               "client_id": "289143772681-kk9buuacbvq4r0k5hham70mbt2lr1111.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "289143772681-jci4k1iufc3hg0psjftkmhcd10eg81m4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.agistudio97.ere-app"
+              }
             }
           ]
         }

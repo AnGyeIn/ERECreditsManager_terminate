@@ -116,6 +116,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         } catch (e: Exception) {
+            e.printStackTrace()
             val providers = arrayListOf(AuthUI.IdpConfig.EmailBuilder().build())
             startActivityForResult(
                     AuthUI.getInstance()
