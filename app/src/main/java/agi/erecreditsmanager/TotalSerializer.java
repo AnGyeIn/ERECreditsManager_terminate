@@ -2,8 +2,6 @@ package agi.erecreditsmanager;
 
 import com.google.gson.JsonObject;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,7 +21,7 @@ public class TotalSerializer {
         this.initCreditManager = initCreditManager;
     }
 
-    JsonObject totalize() throws JSONException {
+    JsonObject totalize() {
         tot.add(initCreditManager);
         for(int idx = 0; idx < tot.size(); idx++)
             switch(tot.get(idx).getCode()) {
