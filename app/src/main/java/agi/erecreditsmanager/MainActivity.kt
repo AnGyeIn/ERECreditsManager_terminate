@@ -40,8 +40,7 @@ class MainActivity : AppCompatActivity() {
     private var pNum = ""
     private var dataStr: String? = null
 
-    //todo: 리뉴얼 앱 다운 링크로 변경
-    private val renewalUrl = "http://www.naver.com/"
+    private val renewalUrl = "https://play.google.com/store/apps/details?id=com.agistudio97.ere_manager"
 
     private lateinit var user: FirebaseUser
 
