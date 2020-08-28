@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
         if (permissionCheck != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1)
 
         val sdcardFolder = Environment.getExternalStorageDirectory()
         val sdcardPath = sdcardFolder.absolutePath

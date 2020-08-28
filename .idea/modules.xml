@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ERECreditsManager.iml" filepath="$PROJECT_DIR$/ERECreditsManager.iml" group="ERECreditsManager" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ERECreditsManager.iml" filepath="$PROJECT_DIR$/.idea/modules/ERECreditsManager.iml" group="ERECreditsManager" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ERECreditsManagerTerminate.iml" filepath="$PROJECT_DIR$/.idea/modules/ERECreditsManagerTerminate.iml" group="ERECreditsManagerTerminate" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="ERECreditsManager/app" />
     </modules>
   </component>
